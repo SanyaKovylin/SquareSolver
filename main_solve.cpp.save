@@ -17,8 +17,8 @@ int tester (void);
     \returns code-of-exit
 */
 
-int main (void)
-{
+int main (int argc, char[] *argv)
+{            
     //assert (tester ());
     tester ();
     double a_coef = 0, b_coef = 0, c_coef = 0;  // coefficients of the equation
@@ -79,14 +79,23 @@ int tester(void){
              compare2 (tests[i].sol2, t2) &&
              tests[i].nroots == t_nroots) == false) {
 
+
+            printf ("Test %.3lu:  ", i);
             txSetConsoleAttr(0x0c);
-            printf ("Test Error Test_id: %lu \n", i);
-            txSetConsoleAttr(0x0b);
+            printf("Failed \n");
+            txSetConsoleAttr(0x04);
             printf ("Out: x1 = %g x2 = %g nroots = %d\n", t1, t2, t_nroots);
-            txSetConsoleAttr(0x0a);
+            txSetConsoleAttr(0x0b);
             printf ("Expected: x1 = %g x2 = %g nroots = %d\n", tests[i].sol1, tests[i].sol2, tests[i].nroots);
             txSetConsoleAttr(0x07);
 
+        }
+        else{
+
+            printf("Test %.3lu:  ", i);
+            txSetConsoleAttr(0x0a);
+            printf("OK \n");
+            txSetConsoleAttr(0x07);
         }
     }
 
