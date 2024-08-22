@@ -1,0 +1,129 @@
+\hypertarget{group___additional}{}\doxysection{Comparing}
+\label{group___additional}\index{Comparing@{Comparing}}
+
+
+Functions for comparing doubles and floats.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (double dble)
+\begin{DoxyCompactList}\small\item\em Comparing double with 0. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___additional_ga6487a243da996d1982aa281703a4e10e}{compare2}} (double dble1, double dble2)
+\begin{DoxyCompactList}\small\item\em Comparing 2 doubles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{group___additional_gafe01386a82fedc016455a43c20280a97}{EPS}} = 0.\+00001
+\begin{DoxyCompactList}\small\item\em defines the accuracy of comparing \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for comparing doubles and floats. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}\label{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}} 
+\index{Comparing@{Comparing}!compare@{compare}}
+\index{compare@{compare}!Comparing@{Comparing}}
+\doxysubsubsection{\texorpdfstring{compare()}{compare()}}
+{\footnotesize\ttfamily int compare (\begin{DoxyParamCaption}\item[{double}]{dble }\end{DoxyParamCaption})}
+
+
+
+Comparing double with 0. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em dble} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of comparing (True $<$==$>$ (dble == 0)) 
+\end{DoxyReturn}
+
+
+Definition at line 300 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{300                          \{}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     assert (isfinite(dble));}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{keywordflow}{return} \mbox{\hyperlink{group___additional_gafe01386a82fedc016455a43c20280a97}{EPS}} > fabs (dble);}
+\DoxyCodeLine{305 \}}
+
+\end{DoxyCode}
+
+
+References EPS.
+
+
+
+Referenced by linear\+\_\+solve(), Solve(), special\+\_\+case(), and square\+\_\+solve().
+
+\mbox{\Hypertarget{group___additional_ga6487a243da996d1982aa281703a4e10e}\label{group___additional_ga6487a243da996d1982aa281703a4e10e}} 
+\index{Comparing@{Comparing}!compare2@{compare2}}
+\index{compare2@{compare2}!Comparing@{Comparing}}
+\doxysubsubsection{\texorpdfstring{compare2()}{compare2()}}
+{\footnotesize\ttfamily int compare2 (\begin{DoxyParamCaption}\item[{double}]{dble1,  }\item[{double}]{dble2 }\end{DoxyParamCaption})}
+
+
+
+Comparing 2 doubles. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em dble1,dble2} & Doubles to compare\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of comparing (True $<$==$>$ (dble1 == dble2)) 
+\end{DoxyReturn}
+
+
+Definition at line 317 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{317                                         \{}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319     assert (isfinite (dble1));}
+\DoxyCodeLine{320     assert (isfinite (dble2));}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322     \textcolor{keywordflow}{return} \mbox{\hyperlink{group___additional_gafe01386a82fedc016455a43c20280a97}{EPS}} > fabs (dble1 -\/ dble2);}
+\DoxyCodeLine{323 \}}
+
+\end{DoxyCode}
+
+
+References EPS.
+
+
+
+Referenced by tester().
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{group___additional_gafe01386a82fedc016455a43c20280a97}\label{group___additional_gafe01386a82fedc016455a43c20280a97}} 
+\index{Comparing@{Comparing}!EPS@{EPS}}
+\index{EPS@{EPS}!Comparing@{Comparing}}
+\doxysubsubsection{\texorpdfstring{EPS}{EPS}}
+{\footnotesize\ttfamily const double EPS = 0.\+00001}
+
+
+
+defines the accuracy of comparing 
+
+
+
+Definition at line 290 of file for\+\_\+solve.\+cpp.
+
+
+
+Referenced by compare(), and compare2().
+

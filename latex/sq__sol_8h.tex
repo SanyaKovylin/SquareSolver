@@ -1,0 +1,67 @@
+\hypertarget{sq__sol_8h}{}\doxysection{sq\+\_\+sol.\+h File Reference}
+\label{sq__sol_8h}\index{sq\_sol.h@{sq\_sol.h}}
+
+
+Header with description of main functions.  
+
+
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274c}{cases}} \{ \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}} = -\/100
+, \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} = 100
+ \}
+\begin{DoxyCompactList}\small\item\em Defined vars for case identification. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group___main__part_gaecab4bb4b1c5c019cc82cbb0f4b9fed7}{input}} (double $\ast$a\+\_\+coef, double $\ast$b\+\_\+coef, double $\ast$c\+\_\+coef)
+\begin{DoxyCompactList}\small\item\em Adjusts alternately input of 3 coefficients. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_ga902b0f2dec708538067670659439fd83}{Solve}} (double a\+\_\+coef, double b\+\_\+coef, double c\+\_\+coef, double $\ast$sol1, double $\ast$sol2)
+\begin{DoxyCompactList}\small\item\em Implementing branching between solving cases and unificating answers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_gaab4efd09ded75ec010a7bb5daacee7bf}{output}} (double sol1, double sol2, int num\+\_\+roots)
+\begin{DoxyCompactList}\small\item\em Adjusts onput of solutions. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (double dble)
+\begin{DoxyCompactList}\small\item\em Comparing double with 0. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___additional_ga6487a243da996d1982aa281703a4e10e}{compare2}} (double dble1, double dble2)
+\begin{DoxyCompactList}\small\item\em Comparing 2 doubles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header with description of main functions. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274c}\label{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274c}} 
+\index{sq\_sol.h@{sq\_sol.h}!cases@{cases}}
+\index{cases@{cases}!sq\_sol.h@{sq\_sol.h}}
+\doxysubsubsection{\texorpdfstring{cases}{cases}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274c}{cases}}}
+
+
+
+Defined vars for case identification. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOXIC@{TOXIC}!sq\_sol.h@{sq\_sol.h}}\index{sq\_sol.h@{sq\_sol.h}!TOXIC@{TOXIC}}}\mbox{\Hypertarget{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}\label{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}} 
+TOXIC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFINITE@{INFINITE}!sq\_sol.h@{sq\_sol.h}}\index{sq\_sol.h@{sq\_sol.h}!INFINITE@{INFINITE}}}\mbox{\Hypertarget{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}\label{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}} 
+INFINITE&For errors. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 19 of file sq\+\_\+sol.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{19            \{}
+\DoxyCodeLine{20     \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}}    = -\/100, }
+\DoxyCodeLine{21     \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} =  100, }
+\DoxyCodeLine{22 \};}
+
+\end{DoxyCode}

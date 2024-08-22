@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1724169446 source:c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\main_solve.c
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	"sq_sol.h"
+
+1724244507 c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\sq_sol.h
+
+1724165341 source:c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\test.c
+
+1724169126 source:c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\for_solve.c
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	"sq_sol.h"
+
+1724248521 source:c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\for_solve.cpp
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	"sq_sol.h"
+
+1724245186 source:c:\users\sanya\onedrive\documents\github\sqsol\squaresolver\main_solve.cpp
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	"sq_sol.h"
+
+1724310116 source:c:\users\sanya\onedrive\documents\github\sqsol\e\for_solve.cpp
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	"sq_sol.h"
+	"get.h"
+
+1724310115 c:\users\sanya\onedrive\documents\github\sqsol\e\sq_sol.h
+
+1724250290 source:c:\users\sanya\onedrive\documents\github\sqsol\e\get.c
+
+1724314874 source:c:\users\sanya\onedrive\documents\github\sqsol\e\main_solve.cpp
+	<TXLib.h>
+	<stdio.h>
+	<assert.h>
+	<ctype.h>
+	"sq_sol.h"
+	"get.h"
+
+1724257286 c:\users\sanya\onedrive\documents\github\sqsol\e\get.h
+
+1724261277 source:c:\users\sanya\onedrive\documents\github\sqsol\e\get.cpp
+	<stdio.h>
+	<assert.h>
+	<math.h>
+	<ctype.h>
+	"get.h"
+

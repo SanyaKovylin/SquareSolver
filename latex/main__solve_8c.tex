@@ -1,0 +1,170 @@
+\hypertarget{main__solve_8c}{}\doxysection{main\+\_\+solve.\+c File Reference}
+\label{main__solve_8c}\index{main\_solve.c@{main\_solve.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}sq\+\_\+sol.\+h\char`\"{}}\newline
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274c}{cases}} \{ \newline
+\mbox{\hyperlink{for__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}} = -\/100
+, \mbox{\hyperlink{for__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} = 100
+, \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}} = -\/100
+, \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} = 100
+, \newline
+\mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}} = -\/100
+, \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} = 100
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main__solve_8c_a38ef11441d081d10f62183011757d296}{tester}} (void)
+\begin{DoxyCompactList}\small\item\em equation of the form a$\ast$x$^\wedge$2 + b$\ast$x + c = 0 \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main__solve_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274c}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274c}} 
+\index{main\_solve.c@{main\_solve.c}!cases@{cases}}
+\index{cases@{cases}!main\_solve.c@{main\_solve.c}}
+\doxysubsubsection{\texorpdfstring{cases}{cases}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{for__solve_8c_a42c05cc36fd85692d8e362476fa7274c}{cases}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOXIC@{TOXIC}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!TOXIC@{TOXIC}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}} 
+TOXIC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFINITE@{INFINITE}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!INFINITE@{INFINITE}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}} 
+INFINITE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOXIC@{TOXIC}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!TOXIC@{TOXIC}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}} 
+TOXIC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFINITE@{INFINITE}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!INFINITE@{INFINITE}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}} 
+INFINITE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOXIC@{TOXIC}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!TOXIC@{TOXIC}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}} 
+TOXIC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFINITE@{INFINITE}!main\_solve.c@{main\_solve.c}}\index{main\_solve.c@{main\_solve.c}!INFINITE@{INFINITE}}}\mbox{\Hypertarget{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}\label{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}} 
+INFINITE&For errors. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 6 of file main\+\_\+solve.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{6 \{\mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}} = -\/100, \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} = 100\};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main__solve_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main__solve_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main\_solve.c@{main\_solve.c}!main@{main}}
+\index{main@{main}!main\_solve.c@{main\_solve.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 12 of file main\+\_\+solve.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{13 \{}
+\DoxyCodeLine{14     assert(\mbox{\hyperlink{main__solve_8c_a38ef11441d081d10f62183011757d296}{tester}}());}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{double} a\_coef = 0, b\_coef = 0, c\_coef = 0;  \textcolor{comment}{// coefficients of the equation}}
+\DoxyCodeLine{17     \mbox{\hyperlink{for__solve_8c_aecab4bb4b1c5c019cc82cbb0f4b9fed7}{input}}(\&a\_coef, \&b\_coef, \&c\_coef);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{double} sol1 = 0, sol2 = 0;}
+\DoxyCodeLine{20     \textcolor{keywordtype}{int} num\_roots = \mbox{\hyperlink{for__solve_8c_a902b0f2dec708538067670659439fd83}{Solve}}(a\_coef, b\_coef, c\_coef , \&sol1, \&sol2);}
+\DoxyCodeLine{21     \textcolor{keywordflow}{return} \mbox{\hyperlink{for__solve_8c_aab4efd09ded75ec010a7bb5daacee7bf}{output}}(sol1, sol2, num\_roots);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \}}
+
+\end{DoxyCode}
+
+
+References input(), output(), Solve(), and tester().
+
+\mbox{\Hypertarget{main__solve_8c_a38ef11441d081d10f62183011757d296}\label{main__solve_8c_a38ef11441d081d10f62183011757d296}} 
+\index{main\_solve.c@{main\_solve.c}!tester@{tester}}
+\index{tester@{tester}!main\_solve.c@{main\_solve.c}}
+\doxysubsubsection{\texorpdfstring{tester()}{tester()}}
+{\footnotesize\ttfamily bool tester (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+equation of the form a$\ast$x$^\wedge$2 + b$\ast$x + c = 0 
+
+Implements the testing.
+
+Enters several tests to the Solve function and checks output
+
+\begin{DoxyReturn}{Returns}
+If there any mistakes 
+\end{DoxyReturn}
+
+
+Definition at line 26 of file main\+\_\+solve.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{26                 \{}
+\DoxyCodeLine{27     \textcolor{keyword}{struct }test \{}
+\DoxyCodeLine{28         \textcolor{keywordtype}{double} a;}
+\DoxyCodeLine{29         \textcolor{keywordtype}{double} b;}
+\DoxyCodeLine{30         \textcolor{keywordtype}{double} c;}
+\DoxyCodeLine{31         \textcolor{keywordtype}{int} nroots;}
+\DoxyCodeLine{32         \textcolor{keywordtype}{double} sol1;}
+\DoxyCodeLine{33         \textcolor{keywordtype}{double} sol2;}
+\DoxyCodeLine{34     \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keyword}{struct }test tests[] = \{}
+\DoxyCodeLine{37     0,0,0,\mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}},0,0,}
+\DoxyCodeLine{38     0,1,0,1,0,0,}
+\DoxyCodeLine{39     0,0,1,0,0,0,}
+\DoxyCodeLine{40     0,1,1,1,-\/1,-\/1,}
+\DoxyCodeLine{41     1,0,0,1,0,0,}
+\DoxyCodeLine{42     1,0,1,0,0,0,}
+\DoxyCodeLine{43     1,1,0,2,0,-\/1,}
+\DoxyCodeLine{44     1,1,1,0,0,0}
+\DoxyCodeLine{45     \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{int} t\_nroots = \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}};}
+\DoxyCodeLine{49     \textcolor{keywordtype}{float} sol1 = \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}}, sol2 = \mbox{\hyperlink{main__solve_8c_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}};}
+\DoxyCodeLine{50     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{51     \textcolor{keywordflow}{for} (i = 0;i < 10;i++)\{}
+\DoxyCodeLine{52         t\_nroots = \mbox{\hyperlink{for__solve_8c_a902b0f2dec708538067670659439fd83}{Solve}}(tests[i].a, tests[i].b, tests[i].c, \&sol1, \&sol2);}
+\DoxyCodeLine{53         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{for__solve_8c_a6487a243da996d1982aa281703a4e10e}{compare2}}(tests[i].sol1, sol1) \&\& \mbox{\hyperlink{for__solve_8c_a6487a243da996d1982aa281703a4e10e}{compare2}}(tests[i].sol2, sol2)}
+\DoxyCodeLine{54                                                     \&\& tests[i].nroots== t\_nroots) == 0) \{}
+\DoxyCodeLine{55             printf(\textcolor{stringliteral}{"{}Test Error \%d \(\backslash\)n \%g \%g \%d"{}},i , sol1, sol2, t\_nroots);}
+\DoxyCodeLine{56             \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{57         \}}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \}}
+
+\end{DoxyCode}
+
+
+References compare2(), INFINITE, Solve(), and TOXIC.
+
+
+
+Referenced by main().
+

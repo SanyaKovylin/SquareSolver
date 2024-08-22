@@ -1,0 +1,463 @@
+\hypertarget{group___main__part}{}\doxysection{Main\+\_\+part}
+\label{group___main__part}\index{Main\_part@{Main\_part}}
+
+
+General functions of solving.  
+
+
+\doxysubsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{group___additional}{Comparing}}
+\begin{DoxyCompactList}\small\item\em Functions for comparing doubles and floats. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group___main__part_gaecab4bb4b1c5c019cc82cbb0f4b9fed7}{input}} (double $\ast$a\+\_\+coef, double $\ast$b\+\_\+coef, double $\ast$c\+\_\+coef)
+\begin{DoxyCompactList}\small\item\em Adjusts alternately input of 3 coefficients. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}{get\+\_\+input}} (double $\ast$coef, char letter)
+\begin{DoxyCompactList}\small\item\em Processing input of one variable. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_ga902b0f2dec708538067670659439fd83}{Solve}} (double a\+\_\+coef, double b\+\_\+coef, double c\+\_\+coef, double $\ast$sol1, double $\ast$sol2)
+\begin{DoxyCompactList}\small\item\em Implementing branching between solving cases and unificating answers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_ga4a8c6036874797876cf4d69325e3805d}{square\+\_\+solve}} (double a\+\_\+coef, double b\+\_\+coef, double c\+\_\+coef, double $\ast$sol1, double $\ast$sol2)
+\begin{DoxyCompactList}\small\item\em Solver for square equations by coefficients. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_gaba5c0067b3b78f919ec2e970ff09ea83}{linear\+\_\+solve}} (double b\+\_\+coef, double c\+\_\+coef, double $\ast$sol1)
+\begin{DoxyCompactList}\small\item\em Solver for linear equations by coefficients. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_ga297e6eb9aecbe708777887c4597583bd}{special\+\_\+case}} (double c\+\_\+coef)
+\begin{DoxyCompactList}\small\item\em Solver for case of 0-\/power polynomial. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group___main__part_gaab4efd09ded75ec010a7bb5daacee7bf}{output}} (double sol1, double sol2, int num\+\_\+roots)
+\begin{DoxyCompactList}\small\item\em Adjusts onput of solutions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+General functions of solving. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}\label{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}} 
+\index{Main\_part@{Main\_part}!get\_input@{get\_input}}
+\index{get\_input@{get\_input}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{get\_input()}{get\_input()}}
+{\footnotesize\ttfamily void get\+\_\+input (\begin{DoxyParamCaption}\item[{double $\ast$}]{coef,  }\item[{char}]{letter }\end{DoxyParamCaption})}
+
+
+
+Processing input of one variable. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em $\ast$coef} & Pointer for coefficient cell \\
+\hline
+\mbox{\texttt{ in}}  & {\em letter} & Name of coef that will be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 50 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{50                                           \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     printf (\textcolor{stringliteral}{"{}\%c: "{}}, letter);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{int} flag;}
+\DoxyCodeLine{55     \textcolor{comment}{/*while ((flag = scanf ("{}\%lf"{}, coef)) == EOF || !flag)\{}}
+\DoxyCodeLine{56 \textcolor{comment}{}}
+\DoxyCodeLine{57 \textcolor{comment}{        printf ("{}Your input has wrong type, please, reenter coefficient \%c\(\backslash\)n"{}, letter);}}
+\DoxyCodeLine{58 \textcolor{comment}{        printf ("{}\%c: "{}, letter);}}
+\DoxyCodeLine{59 \textcolor{comment}{}}
+\DoxyCodeLine{60 \textcolor{comment}{        if (flag != EOF)}}
+\DoxyCodeLine{61 \textcolor{comment}{            while (getchar () != '\(\backslash\)n')  // buffer clean}}
+\DoxyCodeLine{62 \textcolor{comment}{                ;}}
+\DoxyCodeLine{63 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{64         \textcolor{keywordflow}{while} ((flag = \mbox{\hyperlink{get_8cpp_a256d997afc42e936e43dc0085785b776}{getw}} (coef)) != 1)\{}
+\DoxyCodeLine{65         \textcolor{keywordflow}{switch} (flag)\{}
+\DoxyCodeLine{66             \textcolor{keywordflow}{case} 0: \{}
+\DoxyCodeLine{67                 printf (\textcolor{stringliteral}{"{}Your input has wrong type, please, reenter coefficient \%c\(\backslash\)n"{}}, letter);}
+\DoxyCodeLine{68                 printf (\textcolor{stringliteral}{"{}\%c: "{}}, letter);}
+\DoxyCodeLine{69                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{70             \}}
+\DoxyCodeLine{71             \textcolor{keywordflow}{case} 2: \{}
+\DoxyCodeLine{72                 printf (\textcolor{stringliteral}{"{}Your input is too big, please, reenter coefficient \%c\(\backslash\)n"{}}, letter);}
+\DoxyCodeLine{73                 printf (\textcolor{stringliteral}{"{}\%c: "{}}, letter);}
+\DoxyCodeLine{74                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{75             \textcolor{keywordflow}{default}: printf (\textcolor{stringliteral}{"{}Error: InputError"{}});}
+\DoxyCodeLine{76             \}}
+\DoxyCodeLine{77         \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81 \}}
+
+\end{DoxyCode}
+
+
+References getw().
+
+
+
+Referenced by input().
+
+\mbox{\Hypertarget{group___main__part_gaecab4bb4b1c5c019cc82cbb0f4b9fed7}\label{group___main__part_gaecab4bb4b1c5c019cc82cbb0f4b9fed7}} 
+\index{Main\_part@{Main\_part}!input@{input}}
+\index{input@{input}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{input()}{input()}}
+{\footnotesize\ttfamily void input (\begin{DoxyParamCaption}\item[{double $\ast$}]{a\+\_\+coef,  }\item[{double $\ast$}]{b\+\_\+coef,  }\item[{double $\ast$}]{c\+\_\+coef }\end{DoxyParamCaption})}
+
+
+
+Adjusts alternately input of 3 coefficients. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em $\ast$a\+\_\+coef} & Pointer for coefficient a\textquotesingle{}s cell \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$b\+\_\+coef} & Pointer for coefficient b\textquotesingle{}s cell \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$c\+\_\+coef} & Pointer for coefficient c\textquotesingle{}s cell \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 32 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{32                                                           \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     printf (\textcolor{stringliteral}{"{}Please, enter the coefficients of your equation of the form a*x\string^2 + b*x + c = 0\(\backslash\)n"{}});}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \mbox{\hyperlink{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}{get\_input}} (a\_coef, \textcolor{charliteral}{'a'});}
+\DoxyCodeLine{37     \mbox{\hyperlink{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}{get\_input}} (b\_coef, \textcolor{charliteral}{'b'});}
+\DoxyCodeLine{38     \mbox{\hyperlink{group___main__part_gaae8c1be727c759d8feda890136f4e6ec}{get\_input}} (c\_coef, \textcolor{charliteral}{'c'});}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{comment}{//printf ("{}\%lg \%lg \%lg"{}, *a\_coef, *b\_coef, *c\_coef);}}
+\DoxyCodeLine{41 \}}
+
+\end{DoxyCode}
+
+
+References get\+\_\+input().
+
+
+
+Referenced by main().
+
+\mbox{\Hypertarget{group___main__part_gaba5c0067b3b78f919ec2e970ff09ea83}\label{group___main__part_gaba5c0067b3b78f919ec2e970ff09ea83}} 
+\index{Main\_part@{Main\_part}!linear\_solve@{linear\_solve}}
+\index{linear\_solve@{linear\_solve}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{linear\_solve()}{linear\_solve()}}
+{\footnotesize\ttfamily int linear\+\_\+solve (\begin{DoxyParamCaption}\item[{double}]{b\+\_\+coef,  }\item[{double}]{c\+\_\+coef,  }\item[{double $\ast$}]{sol1 }\end{DoxyParamCaption})}
+
+
+
+Solver for linear equations by coefficients. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em b\+\_\+coef,c\+\_\+coef} & Value of coefficient a, b, c \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$sol1} & Pointer to the answer\textquotesingle{}s cell\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+b\+\_\+coef != 0 (We assume that equation actually is Linear)
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Number of roots 
+\end{DoxyReturn}
+
+
+Definition at line 197 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{197                                                               \{}
+\DoxyCodeLine{198     assert (isfinite (b\_coef));}
+\DoxyCodeLine{199     assert (isfinite (c\_coef));}
+\DoxyCodeLine{200     assert (!\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (b\_coef));}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     assert (sol1 != NULL);}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204     *sol1 = -\/c\_coef / b\_coef;}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{207 \}}
+
+\end{DoxyCode}
+
+
+References compare().
+
+
+
+Referenced by Solve().
+
+\mbox{\Hypertarget{group___main__part_gaab4efd09ded75ec010a7bb5daacee7bf}\label{group___main__part_gaab4efd09ded75ec010a7bb5daacee7bf}} 
+\index{Main\_part@{Main\_part}!output@{output}}
+\index{output@{output}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{output()}{output()}}
+{\footnotesize\ttfamily int output (\begin{DoxyParamCaption}\item[{double}]{sol1,  }\item[{double}]{sol2,  }\item[{int}]{num\+\_\+roots }\end{DoxyParamCaption})}
+
+
+
+Adjusts onput of solutions. 
+
+Use case branch by the number of roots
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sol1,sol2} & Solutions to print \\
+\hline
+\mbox{\texttt{ in}}  & {\em num\+\_\+roots} & Number of roots\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+code-\/of-\/exit 
+\end{DoxyReturn}
+
+
+Definition at line 241 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{241                                                    \{}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243     assert (isfinite (sol1));}
+\DoxyCodeLine{244     assert (isfinite (sol2));}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246     \textcolor{keywordflow}{switch} (num\_roots)\{}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{keywordflow}{case} 1 : \{}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250         printf (\textcolor{stringliteral}{"{}Your equation has only one root: \%g"{}}, sol1);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{253     \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \textcolor{keywordflow}{case} 2 : \{}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257         printf (\textcolor{stringliteral}{"{}Your equation has two roots: \(\backslash\)nx1 = \%g \(\backslash\)nx2 = \%g"{}}, sol1, sol2);}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{260     \}}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \textcolor{keywordflow}{case} 0 : \{}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264         printf (\textcolor{stringliteral}{"{}Your equation has no roots"{}});}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{267     \}}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269     \textcolor{keywordflow}{case} \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}} : \{}
+\DoxyCodeLine{270         printf (\textcolor{stringliteral}{"{}Your equation has INFINITE roots"{}});}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{273     \}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     default : \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{276     \}}
+\DoxyCodeLine{277 \}}
+
+\end{DoxyCode}
+
+
+References INFINITE.
+
+
+
+Referenced by main().
+
+\mbox{\Hypertarget{group___main__part_ga902b0f2dec708538067670659439fd83}\label{group___main__part_ga902b0f2dec708538067670659439fd83}} 
+\index{Main\_part@{Main\_part}!Solve@{Solve}}
+\index{Solve@{Solve}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{Solve()}{Solve()}}
+{\footnotesize\ttfamily int Solve (\begin{DoxyParamCaption}\item[{double}]{a\+\_\+coef,  }\item[{double}]{b\+\_\+coef,  }\item[{double}]{c\+\_\+coef,  }\item[{double $\ast$}]{sol1,  }\item[{double $\ast$}]{sol2 }\end{DoxyParamCaption})}
+
+
+
+Implementing branching between solving cases and unificating answers. 
+
+If equation has more or less than 2 roots, take it as a standart that sol1 = sol2
+
+And if they are undefined (0 or INF) assign them 0-\/valued
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a\+\_\+coef,b\+\_\+coef,c\+\_\+coef} & Value of coefficient a, b, c \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$sol1,$\ast$sol2} & Pointers to the answers\textquotesingle{} cells\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of roots 
+\end{DoxyReturn}
+
+
+Definition at line 99 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{99                                                                                  \{}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     assert (isfinite (a\_coef));}
+\DoxyCodeLine{102     assert (isfinite (b\_coef));}
+\DoxyCodeLine{103     assert (isfinite (c\_coef));}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     assert (sol1 != NULL);}
+\DoxyCodeLine{106     assert (sol2 != NULL);}
+\DoxyCodeLine{107     assert (sol1 != sol2);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{int} num\_roots = \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274caec95012c900e390a3efa5d11ea319e11}{TOXIC}};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{keywordflow}{if} (\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (a\_coef)) \{}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         \textcolor{keywordflow}{if} (\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (b\_coef))\{}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115             num\_roots = \mbox{\hyperlink{group___main__part_ga297e6eb9aecbe708777887c4597583bd}{special\_case}} (c\_coef);}
+\DoxyCodeLine{116             *sol1 = 0;}
+\DoxyCodeLine{117             *sol2 = *sol1;}
+\DoxyCodeLine{118         \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{121             num\_roots = \mbox{\hyperlink{group___main__part_gaba5c0067b3b78f919ec2e970ff09ea83}{linear\_solve}} (b\_coef, c\_coef, sol1);}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123             *sol2 = *sol1;}
+\DoxyCodeLine{124         \}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \}}
+\DoxyCodeLine{127     \textcolor{keywordflow}{else} num\_roots = \mbox{\hyperlink{group___main__part_ga4a8c6036874797876cf4d69325e3805d}{square\_solve}} (a\_coef, b\_coef, c\_coef, sol1, sol2);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{keywordflow}{return} num\_roots;}
+\DoxyCodeLine{130 \}}
+
+\end{DoxyCode}
+
+
+References compare(), linear\+\_\+solve(), special\+\_\+case(), square\+\_\+solve(), and TOXIC.
+
+
+
+Referenced by main(), and tester().
+
+\mbox{\Hypertarget{group___main__part_ga297e6eb9aecbe708777887c4597583bd}\label{group___main__part_ga297e6eb9aecbe708777887c4597583bd}} 
+\index{Main\_part@{Main\_part}!special\_case@{special\_case}}
+\index{special\_case@{special\_case}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{special\_case()}{special\_case()}}
+{\footnotesize\ttfamily int special\+\_\+case (\begin{DoxyParamCaption}\item[{double}]{c\+\_\+coef }\end{DoxyParamCaption})}
+
+
+
+Solver for case of 0-\/power polynomial. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em c\+\_\+coef} & Value of coefficient c\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of roots 
+\end{DoxyReturn}
+
+
+Definition at line 219 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{219                                 \{}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     assert (isfinite (c\_coef));}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223     \textcolor{keywordflow}{if} (\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}}(c\_coef)) \textcolor{keywordflow}{return} \mbox{\hyperlink{sq__sol_8h_a42c05cc36fd85692d8e362476fa7274ca6a1459101774b7f68e084098fa8bacbb}{INFINITE}};}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{226 \}}
+
+\end{DoxyCode}
+
+
+References compare(), and INFINITE.
+
+
+
+Referenced by Solve().
+
+\mbox{\Hypertarget{group___main__part_ga4a8c6036874797876cf4d69325e3805d}\label{group___main__part_ga4a8c6036874797876cf4d69325e3805d}} 
+\index{Main\_part@{Main\_part}!square\_solve@{square\_solve}}
+\index{square\_solve@{square\_solve}!Main\_part@{Main\_part}}
+\doxysubsubsection{\texorpdfstring{square\_solve()}{square\_solve()}}
+{\footnotesize\ttfamily int square\+\_\+solve (\begin{DoxyParamCaption}\item[{double}]{a\+\_\+coef,  }\item[{double}]{b\+\_\+coef,  }\item[{double}]{c\+\_\+coef,  }\item[{double $\ast$}]{sol1,  }\item[{double $\ast$}]{sol2 }\end{DoxyParamCaption})}
+
+
+
+Solver for square equations by coefficients. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a\+\_\+coef,b\+\_\+coef,c\+\_\+coef} & Value of coefficient a, b, c \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$sol1,$\ast$sol2} & Pointers to the answers\textquotesingle{} cells\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+a\+\_\+coef != 0 (We assume that equation actually is Square)
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Number of roots 
+\end{DoxyReturn}
+
+
+Definition at line 145 of file for\+\_\+solve.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{145                                                                                          \{}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     assert (isfinite (a\_coef));}
+\DoxyCodeLine{148     assert (isfinite (b\_coef));}
+\DoxyCodeLine{149     assert (isfinite (c\_coef));}
+\DoxyCodeLine{150     assert (!\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (a\_coef));}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152     assert (sol1 != NULL);}
+\DoxyCodeLine{153     assert (sol2 != NULL);}
+\DoxyCodeLine{154     assert (sol1 != sol2);}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{keywordtype}{double} discr = 0;  \textcolor{comment}{// The discriminant of equation and its square root}}
+\DoxyCodeLine{157     \textcolor{keywordtype}{double} inv\_a\_coefx2 = 1 / (a\_coef * 2); \textcolor{comment}{// Due to inevitability of computation we take it once}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     discr = b\_coef * b\_coef -\/ 4 * a\_coef * c\_coef;\textcolor{comment}{// compute the discriminant of equation}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \textcolor{keywordflow}{if} (\mbox{\hyperlink{group___additional_ga18f9629fbd40fc6930cfbdbf7f0d5b9a}{compare}} (discr))\{}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163         *sol1 = -\/b\_coef * inv\_a\_coefx2;}
+\DoxyCodeLine{164         *sol2 = *sol1;}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (discr > 0)\{}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171         discr = sqrt (discr);}
+\DoxyCodeLine{172         *sol1 = (-\/b\_coef + discr) * inv\_a\_coefx2;}
+\DoxyCodeLine{173         *sol2 = (-\/b\_coef -\/ discr) * inv\_a\_coefx2;}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175         \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     *sol1 = 0;}
+\DoxyCodeLine{179     *sol2 = *sol1;}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{182 \}}
+
+\end{DoxyCode}
+
+
+References compare().
+
+
+
+Referenced by Solve().
+
