@@ -59,7 +59,7 @@ int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int 
 
                 case 'e':{ *e    = 1; break;}
 
-                case '-':{
+                case '-1':{
 
                     if (comp_str((*argv), "--test")) *test = 1;
                     else return 0;
@@ -111,6 +111,7 @@ void check_input (double *coef, char letter){
             }
             default: printf ("Error: InputError: error_type = %d", error_type);
         }
+        for (int i = 0; i<MAXLENGTH;i++) str[i] = '\0';
     }
 }
 
@@ -262,7 +263,6 @@ int comp_str(char line1[],const char line2[]){
 
 
 char *arm_inp(char str[]){
-
 
     int len = 0, c = 0;
 

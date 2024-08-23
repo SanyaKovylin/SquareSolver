@@ -1,12 +1,13 @@
 //!< \file
 //!< \brief Main file of project that solves equation of the form a*x^2 + b*x + c = 0 and tests itself
 
-#include <TXLib.h>
+
 #include <stdio.h>
 #include <assert.h>
 #include <ctype.h>
 #include "sq_sol.h"
 #include "get.h"
+#include <windows.h>
 
 int tester (void);
 
@@ -54,6 +55,10 @@ int main (int argc, char *argv[])
 
 int tester(void){
 
+    HANDLE  hConsole;
+
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
     struct test {
 
         double a;
@@ -94,21 +99,22 @@ int tester(void){
 
 
             printf ("Test %.3lu:  ", i);
-            txSetConsoleAttr(0x0c);
+            // txSetConsoleAttr(0x0c);
+            SetConsoleTextAttribute(hConsole, 12);
             printf("Failed \n");
-            txSetConsoleAttr(0x04);
+            SetConsoleTextAttribute(hConsole, 4);
             printf ("Out: x1 = %g x2 = %g nroots = %d\n", t1, t2, t_nroots);
-            txSetConsoleAttr(0x0b);
+            SetConsoleTextAttribute(hConsole, 11);
             printf ("Expected: x1 = %g x2 = %g nroots = %d\n", tests[i].sol1, tests[i].sol2, tests[i].nroots);
-            txSetConsoleAttr(0x07);
+            SetConsoleTextAttribute(hConsole, 7);;
 
         }
         else{
 
             printf("Test %.3lu:  ", i);
-            txSetConsoleAttr(0x0a);
+            SetConsoleTextAttribute(hConsole, 2);
             printf("OK \n");
-            txSetConsoleAttr(0x07);
+            SetConsoleTextAttribute(hConsole, 7);
         }
     }
 
