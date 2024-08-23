@@ -2,7 +2,6 @@
 #define GET_H_INCLUDED
 
 
-
 int get_input (double *var);
 int cons_get (double *a_coef, double *b_coef, double *c_coef, char *line[], int cou,int *test,int *e);
 void check_input (double *coef, char letter);

@@ -49,6 +49,7 @@ void input(double *a_coef, double *b_coef, double *c_coef){
 }
 
 int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int cou, int *test,int *e){
+
     int add = 0;
     add = check_add_input (argv, cou, test, e);
 
@@ -60,8 +61,7 @@ int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int 
 
         return 1;
     }
-    else if (cou - add == -1)
-        return -1;
+    else if (cou - add == -1) return -1;
     return 0;
 }
 
@@ -186,7 +186,6 @@ int dot_check(double *power, double *val,char *str, int *i, int len){
     return 1;
 }
 
-
 int e_check (int *esign, int *epower, char *str, int *i, int len){
 
     int sign_flag = 0;
@@ -208,7 +207,6 @@ int e_check (int *esign, int *epower, char *str, int *i, int len){
     }
     return 1;
 }
-
 
 int pre_check(int *sign, double *val,char *str, int *i, int len) {
 
@@ -243,7 +241,6 @@ int comp_str(char line1[],const char line2[]){
 
 }
 
-
 char *arm_inp(char str[]){
 
     int len = 0, c = 0;
@@ -254,13 +251,11 @@ char *arm_inp(char str[]){
     return str;
 }
 
-
-
 int check_add_input(char *argv[], int cou, int *test, int *e){
     int c;
     int add = 0;
 
-    while ( (*++argv)[0] == '-' && !isdigit ((*argv)[0])){
+    while ((*++argv)[0] == '-' && !isdigit ((*argv)[0])){
 
         while (c = *++argv[0]){
 
@@ -289,7 +284,6 @@ int check_add_input(char *argv[], int cou, int *test, int *e){
     }
     return add;
 }
-
 
 void help(void){
     printf(

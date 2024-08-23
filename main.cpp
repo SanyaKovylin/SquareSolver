@@ -1,7 +1,6 @@
 //!< \file
 //!< \brief Main file of project that solves equation of the form a*x^2 + b*x + c = 0 and tests itself
 
-
 #include <stdio.h>
 #include <assert.h>
 #include <ctype.h>
