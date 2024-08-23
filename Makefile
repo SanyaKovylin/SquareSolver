@@ -15,10 +15,10 @@ io.o: Source/io.cpp
 	$(CC) Source/io.cpp -c -o Build/io.o
 
 get: allc
-	$(CC) $(COMP_FLAGS) -o Build/Project Build/main.o Build/solver.o Build/io.o
+	$(CC) $(COMP_FLAGS) -o Build/Solver Build/main.o Build/solver.o Build/io.o
 
 run:
-	Build/Project
+	Build/Solver
 
 clean:
 	cd Build && rm -rf *.o && cd ..
