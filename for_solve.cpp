@@ -7,8 +7,8 @@
 #include <assert.h>
 #include "sq_sol.h"
 #include "get.h"
+#include "sq_sol.h"
 
-void get_input (double *coef, char letter); //< Function for one var input + correct check
 int square_solve (double a_coef, double b_coef, double c_coef, double *sol1, double *sol2); //< Solver for square equations by coefficients
 int linear_solve (double b_coef, double c_coef, double* sol1); //< Solver for linear equations by coefficients
 int special_case (double c_coef); //< Solver for 0-power equation by coefficient
@@ -22,63 +22,7 @@ int special_case (double c_coef); //< Solver for 0-power equation by coefficient
 
 
 
-/*!
-    \brief Adjusts alternately input of 3 coefficients
 
-    \param [in] *a_coef      Pointer for coefficient a's cell
-    \param [in] *b_coef      Pointer for coefficient b's cell
-    \param [in] *c_coef      Pointer for coefficient c's cell
-*/
-void input(double *a_coef, double *b_coef, double *c_coef){
-
-    printf ("Please, enter the coefficients of your equation of the form a*x^2 + b*x + c = 0\n");
-
-    get_input (a_coef, 'a');
-    get_input (b_coef, 'b');
-    get_input (c_coef, 'c');
-
-    //printf ("%lg %lg %lg", *a_coef, *b_coef, *c_coef);
-}
-
-/*!
-    \brief Processing input of one variable
-
-    \param [in]  *coef    Pointer for coefficient cell
-    \param [in] letter    Name of coef that will be printed
-*/
-
-void get_input (double *coef, char letter){
-
-    printf ("%c: ", letter);
-
-    int flag = 0;
-    /*while ((flag = scanf ("%lf", coef)) == EOF || !flag){
-
-        printf ("Your input has wrong type, please, reenter coefficient %c\n", letter);
-        printf ("%c: ", letter);
-
-        if (flag != EOF)
-            while (getchar () != '\n')  // buffer clean
-                ;
-    }*/
-        while ((flag = getw (coef)) != 1){
-        switch (flag){
-            case 0: {
-                printf ("Your input has wrong type, please, reenter coefficient %c\n", letter);
-                printf ("%c: ", letter);
-                break;
-            }
-            case 2: {
-                printf ("Your input is too big, please, reenter coefficient %c\n", letter);
-                printf ("%c: ", letter);
-                break;
-            default: printf ("Error: InputError");
-            }
-        }
-
-
-        }
-}
 
 //-----------------------------------------------------------------------------
 
@@ -117,7 +61,7 @@ int Solve(double a_coef,double b_coef, double c_coef, double *sol1, double *sol2
             *sol2 = *sol1;
         }
 
-        else{
+        else {
             num_roots = linear_solve (b_coef, c_coef, sol1);
 
             *sol2 = *sol1;
@@ -220,7 +164,7 @@ int special_case (double c_coef){
 
     assert (isfinite (c_coef));
 
-    if (compare(c_coef)) return INFROOTS;
+    if (compare (c_coef)) return INFROOTS;
 
     return 0;
 }
@@ -242,70 +186,73 @@ int output(double sol1, double sol2, int num_roots, int e){
 
     assert (isfinite (sol1));
     assert (isfinite (sol2));
+
     if (!e){
-    switch (num_roots){
+        switch (num_roots){
 
-    case 1 : {
+            case 1 : {
 
-        printf ("Your equation has only one root: %g", sol1);
+                printf ("Your equation has only one root: %g", sol1);
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case 2 : {
+            case 2 : {
 
-        printf ("Your equation has two roots: \nx1 = %g \nx2 = %g", sol1, sol2);
+                printf ("Your equation has two roots: \nx1 = %g \nx2 = %g", sol1, sol2);
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case 0 : {
+            case 0 : {
 
-        printf ("Your equation has no roots");
+                printf ("Your equation has no roots");
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case INFROOTS : {
-        printf ("Your equation has INFROOTS roots");
+            case INFROOTS : {
+                printf ("Your equation has INFROOTS roots");
 
-        return 0;
-    }
+                return 0;
+            }
 
-    default : return 2;
-    }}
-    else{
-    switch (num_roots){
+            default : return 2;
+            }
+        }
+    else {
+        switch (num_roots){
 
-    case 1 : {
+            case 1 : {
 
-        printf ("Your equation has only one root: %e", sol1);
+                printf ("Your equation has only one root: %e", sol1);
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case 2 : {
+            case 2 : {
 
-        printf ("Your equation has two roots: \nx1 = %e \nx2 = %e", sol1, sol2);
+                printf ("Your equation has two roots: \nx1 = %e \nx2 = %e", sol1, sol2);
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case 0 : {
+            case 0 : {
 
-        printf ("Your equation has no roots");
+                printf ("Your equation has no roots");
 
-        return 0;
-    }
+                return 0;
+            }
 
-    case INFROOTS : {
-        printf ("Your equation has INFROOTS roots");
+            case INFROOTS : {
 
-        return 0;
-    }
+                printf ("Your equation has INFROOTS roots. Go away in your dirty boots.");
 
-    default : return 2;
-    }
+                return 0;
+            }
+
+            default : return 2;
+        }
     }
 }
 // @}
@@ -326,15 +273,15 @@ const double EPS = 0.00001;///< defines the accuracy of comparing
 /*!
     \brief Comparing double with 0
 
-    \param [in] dble
+    \param [in] val
 
-    \returns Result of comparing (True <==> (dble == 0))
+    \returns Result of comparing (True <==> (val == 0))
 */
-int compare (double dble){
+int compare (double val){
 
-    assert (isfinite(dble));
+    assert (isfinite(val));
 
-    return EPS > fabs (dble);
+    return EPS > fabs (val);
 }
 
 //-----------------------------------------------------------------------------
@@ -342,17 +289,17 @@ int compare (double dble){
 /*!
     \brief Comparing 2 doubles
 
-    \param [in] dble1, dble2   Doubles to compare
+    \param [in] val1, val2   Doubles to compare
 
-    \returns Result of comparing (True <==> (dble1 == dble2))
+    \returns Result of comparing (True <==> (val1 == val2))
 */
 
-int compare2(double dble1, double dble2){
+int compare2(double val1, double val2){
 
-    assert (isfinite (dble1));
-    assert (isfinite (dble2));
+    assert (isfinite (val1));
+    assert (isfinite (val2));
 
-    return EPS > fabs (dble1 - dble2);
+    return EPS > fabs (val1 - val2);
 }
 // @}
 

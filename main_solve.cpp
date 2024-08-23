@@ -23,18 +23,20 @@ int main (int argc, char *argv[])
 
     int e = 0;
     double a_coef = 0, b_coef = 1, c_coef = 0;  // coefficients of the equation
+
     if (argc == 1)   {
+
         tester ();
-        printf("E");
-        input (&a_coef, &b_coef, &c_coef);   }
+        input (&a_coef, &b_coef, &c_coef);
+    }
     else   {
-        printf("H");
+
         int test = 0, flag = 0;
-        flag = big_get(&a_coef, &b_coef, &c_coef, argv++, argc - 1, &test, &e);
+        flag = cons_get(&a_coef, &b_coef, &c_coef, argv++, argc - 1, &test, &e);
 
         if (test) tester();
         if (!flag) {printf("INPUTERROR"); return 10;}
-        }
+    }
 
     double sol1 = 0, sol2 = 0;
     int num_roots = Solve (a_coef, b_coef, c_coef , &sol1, &sol2);
@@ -86,7 +88,6 @@ int tester(void){
 
         t_nroots = Solve(tests[i].a, tests[i].b, tests[i].c, &t1, &t2);
 
-        //printf("%g %g %g %g",tests[i].sol1, t1,tests[i].sol2, t2);
         if ((compare2 (tests[i].sol1, t1) &&
              compare2 (tests[i].sol2, t2) &&
              tests[i].nroots == t_nroots) == false) {

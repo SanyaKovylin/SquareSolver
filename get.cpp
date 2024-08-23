@@ -23,7 +23,7 @@
 //!
 
 
-int getw (double *var){
+int get_input (double *var){
 
     const int MAXLENGTH = 1000;
     char str [MAXLENGTH] = {0};
@@ -33,77 +33,56 @@ int getw (double *var){
         *(str + len) = (char) c;
 
     double val = 0;
-    //printf("%d %s\n", i, str);
 
     if (len) {
 
         int i = 0;
         while ( *(str + i) == ' ') i++;
-        int sign = ( *(str + i) == '-') ? -1 : 1;
-        int f = 0;
-        f = (*(str + i) == '+' || *(str + i) == '-');
+        int sign = 0;
 
-        for (i += f; i < len              &&
-                        *(str + i) != '.' &&
-                        *(str + i) != ' ' &&
-                        *(str + i) != 'e' &&
-                        *(str + i) != 'E'; i++) {
+        int retr = pre_check(&sign, &val, str, &i, len);
+        //retr = dot_check(&power, &val, str, i, len);
 
-            if (isdigit (*(str + i))) {
-                val = 10.0 * val + (*(str + i) - '0');
-                if (!isfinite (val))
-                    return 2; }
-            else
-                return 0;
+        switch (retr){
+
+            case 2  : return 2;
+
+            case 0  : return 0;
+
+            default : break;
         }
-        //printf("%d %d %g\n", i, sign, val);
+
 //-----------------------------------------------------------------------------
 
         double power = 1;
-        f = (*(str + i) == '.');
+        retr = dot_check(&power, &val, str, &i, len);
+        //retr = dot_check(&power, &val, str, i, len);
 
-        for(i += f; i < len &&  *(str + i) != ' ' &&
-                                *(str + i) != 'e' &&
-                                *(str + i) != 'E'; i++){
+        switch (retr){
 
-            if (isdigit (*(str + i))){
+            case 2  : return 2;
 
-                power /= 10.0;
-                val += (*(str + i) - '0') * power;
-                if (!isfinite (val)) return 2;
-            }
-            else
-                return 0;
+            case 0  : return 0;
+
+            default : break;
         }
-
-        //printf("%d %d %g\n", i, sign, val);
 
 //-----------------------------------------------------------------------------
 
-
         int epower = 0;
-        int ff = 0;
+        int esign = 0;
 
-        f = (*(str + i) == 'e' || *(str + i) == 'E');
-        i += f;
+        retr = e_check(&esign, &epower, str, &i, len);
+        //retr = dot_check(&power, &val, str, i, len);
 
-        int esign = (*(str + i) == '-') ? -1 : 1;
+        switch (retr){
 
-        ff = (*(str + i) == '+' || *(str + i) == '-');
+            case 0  : return 0;
 
-        for(i += ff; i < len && *(str + i) != ' '; i++){
-
-            if (isdigit (*(str + i))){
-
-                epower += epower * 10 + (*(str + i) - '0');
-                if (!isfinite (val)) return 2;
-            }
-            else
-                return 0;
+            default : break;
         }
 
 
-        //printf("%d %d %g\n", i, sign, val);
         while (*(str + len - 1) == ' ') len--;
 
         if (len != i)  return 0;
@@ -113,9 +92,74 @@ int getw (double *var){
     }
     else
         return 0;
+}
 
 
+int dot_check(double *power, double *val,char *str, int *i, int len){
+        int dot_flag = 0;
+        dot_flag = (*(str + *i) == '.');
 
+        for(*i += dot_flag; *i < len &&   *(str + *i) != ' ' &&
+                                        *(str + *i) != 'e' &&
+                                        *(str + *i) != 'E'; (*i)++){
+
+            if (isdigit (*(str + *i))){
+
+                *power /= 10.0;
+                *val += (*(str + *i) - '0') * *power;
+                if (!isfinite (*val)) return 2;
+            }
+            else
+                return 0;
+        }
+    return 1;
+}
+
+
+int e_check (int *esign, int *epower, char *str, int *i, int len){
+
+    int sign_flag = 0;
+    int e_flag = 0;
+
+    e_flag = (*(str + *i) == 'e' || *(str + *i) == 'E');
+    *i += e_flag;
+
+    *esign = (*(str + *i) == '-') ? -1 : 1;
+
+    sign_flag = (*(str + *i) == '+' || *(str + *i) == '-');
+
+    for(*i += sign_flag; *i < len && *(str + *i) != ' '; (*i)++){
+        if (isdigit (*(str + *i))){
+            *epower += (*epower) * 10 + (*(str + *i) - '0');
+        }
+        else
+            return 0;
+    }
+    return 1;
+}
+
+
+int pre_check(int *sign, double *val,char *str, int *i, int len) {
+
+    *sign = ( *(str + *i) == '-') ? -1 : 1;
+    int sign_flag = 0;
+    sign_flag = (*(str + *i) == '+' || *(str + *i) == '-');
+
+    for (*i += sign_flag; *i < len      &&
+                    *(str + *i) != '.'  &&
+                    *(str + *i) != ' '  &&
+                    *(str + *i) != 'e'  &&
+                    *(str + *i) != 'E'; (*i)++) {
+
+        if (isdigit (*(str + *i))) {
+            *val = 10.0 * *val + (*(str + *i) - '0');
+            if (!isfinite (*val))
+                return 2; }
+        else
+            return 0;
+    }
+
+    return 1;
 }
 
 
