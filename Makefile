@@ -23,6 +23,8 @@ run:
 clean:
 	cd Build && rm -rf *.o && cd ..
 
+move:
+	move *.h Headers
 
 
 
