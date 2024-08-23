@@ -37,6 +37,7 @@ int main (int argc, char *argv[])
 
         if (test) tester();
         if (!flag) {printf("INPUTERROR"); return 10;}
+        else if (flag == -1) return -10;
     }
 
     double sol1 = 0, sol2 = 0;

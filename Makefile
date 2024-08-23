@@ -20,7 +20,7 @@ for_solve.o : for_solve.cpp
 cons_and_file_get.o: cons_and_file_get.cpp
 	g++ cons_and_file_get.cpp -c -o Object/cons_and_file_get.o
 
-get:
+get: allc
 	g++ $(COMP_FLAGS) -o Project/Project Object/main_solve.o Object/for_solve.o Object/cons_and_file_get.o
 
 run:

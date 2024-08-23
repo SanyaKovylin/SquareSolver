@@ -20,6 +20,8 @@
 
 
 int comp_str (char line1[],const char line2[]);
+int check_add_input(char *argv[], int cou, int *test, int *e);
+void help(void);
 
 //! @brief Bilds double from the line of chars
 //!
@@ -46,41 +48,21 @@ void input(double *a_coef, double *b_coef, double *c_coef){
     //printf ("%lg %lg %lg", *a_coef, *b_coef, *c_coef);
 }
 
-int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int cou,int *test,int *e){
+int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int cou, int *test,int *e){
+    int add = 0;
+    add = check_add_input (argv, cou, test, e);
 
-    while (cou > 3 && (*++argv)[0] == '-'){
-        char c ='\0';
+    if (cou - add == 3){
 
-            c = (*argv)[1];
+        get_num (a_coef, argv[1+add]);
+        get_num (b_coef, argv[2+add]);
+        get_num (c_coef, argv[3+add]);
 
-            switch (c){
-
-                case 't':{ *test = 1; break;}
-
-                case 'e':{ *e    = 1; break;}
-
-                case '-1':{
-
-                    if (comp_str((*argv), "--test")) *test = 1;
-                    else return 0;
-                    break;
-                }
-
-                default : return 0;
-            }
-        cou -= 1;
-
-    }
-
-    if (cou == 3){
-
-        get_num (a_coef, argv[1]);
-        get_num (b_coef, argv[2]);
-        get_num (c_coef, argv[3]);
         return 1;
     }
-    else
-        return 0;
+    else if (cou - add == -1)
+        return -1;
+    return 0;
 }
 
 /*!
@@ -272,3 +254,55 @@ char *arm_inp(char str[]){
     return str;
 }
 
+
+
+int check_add_input(char *argv[], int cou, int *test, int *e){
+    int c;
+    int add = 0;
+
+    while ( (*++argv)[0] == '-' && !isdigit ((*argv)[0])){
+
+        while (c = *++argv[0]){
+
+                switch (c){
+
+                    case 'h':{help(); return cou + 1;}
+
+                    case 't':{ *test = 1; break;}
+
+                    case 'e':{ *e    = 1; break;}
+
+                    case '-':{
+
+                        if (comp_str((*argv), "-test")) {*test = 1; goto skip;}
+                        else if (comp_str((*argv), "-help")) {help(); return cou + 1;}
+                        else return 0;
+                        break;
+                    }
+
+                    default : return 0;
+                }
+        }
+        skip:
+        cou -= 1;
+        add++;
+    }
+    return add;
+}
+
+
+void help(void){
+    printf(
+        "Project [options] [coefs]  usage information\n"
+        "Options\n"
+
+        "\t-h/--help     Display this information\n"
+        "\t-t/--test     Do Unit-test at the star of solving\n"
+        "\t-e            Display roots in exponental form\n"
+
+        "\n\n\n"
+
+        "\tAFTER optional arguments enter 3 coefficients splitted with <Space>\n"
+
+    );
+}
