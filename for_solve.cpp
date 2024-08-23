@@ -7,11 +7,12 @@
 #include <assert.h>
 #include "sq_sol.h"
 #include "get.h"
-#include "sq_sol.h"
+#include <string.h>
 
 int square_solve (double a_coef, double b_coef, double c_coef, double *sol1, double *sol2); //< Solver for square equations by coefficients
 int linear_solve (double b_coef, double c_coef, double* sol1); //< Solver for linear equations by coefficients
 int special_case (double c_coef); //< Solver for 0-power equation by coefficient
+int e_print(double sol1, double sol2, int num_roots, const char *prt, const char *prt2);
 
 /** \defgroup Main_part Main_part
 
@@ -19,10 +20,6 @@ int special_case (double c_coef); //< Solver for 0-power equation by coefficient
 
     @{
 */
-
-
-
-
 
 //-----------------------------------------------------------------------------
 
@@ -86,6 +83,7 @@ int Solve(double a_coef,double b_coef, double c_coef, double *sol1, double *sol2
 
     \returns Number of roots
 */
+
 int square_solve(double a_coef, double b_coef, double c_coef, double *sol1, double *sol2){
 
     assert (isfinite (a_coef));
@@ -174,10 +172,11 @@ int special_case (double c_coef){
 /*!
     \brief Adjusts onput of solutions
 
-    Use case branch by the number of roots
+    Use case branch by the type of output
 
     \param [in] sol1,sol2    Solutions to print
     \param [in] num_roots    Number of roots
+    \param [in] e    Is out in E-form
 
     \return code-of-exit
 */
@@ -186,53 +185,52 @@ int output(double sol1, double sol2, int num_roots, int e){
 
     assert (isfinite (sol1));
     assert (isfinite (sol2));
+    if (e){
 
-    if (!e){
-        switch (num_roots){
+        const char e[] = "e";
+        const char e2[] = "e";
+        return e_print(sol1, sol2, num_roots, e, e2);
+    }
+
+    const char g[] = "g";
+    const char g2[] = "g";
+    return e_print(sol1, sol2, num_roots, g, g2);
+}
+
+/*!
+    \brief Adjusts onput of solutions
+
+    Use case branch by the number of roots
+
+    \param [in] sol1,sol2    Solutions to print
+    \param [in] num_roots    Number of roots
+    \param [in] form, form2  Format of the print
+
+    \return code-of-exit
+*/
+int e_print(double sol1, double sol2, int num_roots, const char form[], const char form2[]){
+
+    switch (num_roots){
 
             case 1 : {
 
-                printf ("Your equation has only one root: %g", sol1);
+                char out[] = "Your equation has only one root: %";
+
+                printf (strcat(out, form), sol1);
 
                 return 0;
             }
 
             case 2 : {
 
-                printf ("Your equation has two roots: \nx1 = %g \nx2 = %g", sol1, sol2);
+                char out2[100] = "\nx2 = %";
+                char out1[100] = "Your equation has two roots: \nx1 = %";
 
-                return 0;
-            }
+                strcat (out1, form);
+                printf (out1, sol1);
 
-            case 0 : {
-
-                printf ("Your equation has no roots");
-
-                return 0;
-            }
-
-            case INFROOTS : {
-                printf ("Your equation has INFROOTS roots");
-
-                return 0;
-            }
-
-            default : return 2;
-            }
-        }
-    else {
-        switch (num_roots){
-
-            case 1 : {
-
-                printf ("Your equation has only one root: %e", sol1);
-
-                return 0;
-            }
-
-            case 2 : {
-
-                printf ("Your equation has two roots: \nx1 = %e \nx2 = %e", sol1, sol2);
+                strcat (out2, form2);
+                printf (out2, sol2);
 
                 return 0;
             }
@@ -253,9 +251,10 @@ int output(double sol1, double sol2, int num_roots, int e){
 
             default : return 2;
         }
-    }
 }
+
 // @}
+
 
 //-----------------------------------------------------------------------------
 
