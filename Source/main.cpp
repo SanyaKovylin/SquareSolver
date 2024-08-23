@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <ctype.h>
-#include "sq_sol.h"
-#include "get.h"
+#include "../Headers\sq_sol.h"
+#include "../Headers\get.h"
 #include <windows.h>
 
 int tester (void);

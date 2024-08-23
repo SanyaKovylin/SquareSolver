@@ -6,8 +6,8 @@
 #include <assert.h>
 #include <math.h>
 #include <ctype.h>
-#include "get.h"
-#include "sq_sol.h"
+#include "../Headers\get.h"
+#include "../Headers\sq_sol.h"
 
 
 

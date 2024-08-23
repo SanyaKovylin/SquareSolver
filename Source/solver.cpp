@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
-#include "sq_sol.h"
-#include "get.h"
+#include "../Headers\sq_sol.h"
+#include "../Headers\get.h"
 #include <string.h>
 
 int square_solve (double a_coef, double b_coef, double c_coef, double *sol1, double *sol2); //< Solver for square equations by coefficients
