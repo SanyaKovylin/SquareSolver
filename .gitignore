@@ -2,10 +2,6 @@
 *.o
 *.bmarks
 .vscode
-build
-html
-latex
-obj
 Doxyfile*
 SquareSolver*
 
