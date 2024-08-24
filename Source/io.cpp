@@ -6,29 +6,16 @@
 #include <assert.h>
 #include <math.h>
 #include <ctype.h>
-#include "../Include\get.h"
-#include "../Include\sq_sol.h"
+#include "sq_sol.h"
+#include "get.h"
 
 
+#define NextSym (*(Buffer+*Position))
 
-
-/* main (void){
-    double v = 0;
-    int res = big_get (&v);
-    printf ("%lg %d \n", v, res);
-}  */
-
-
-int comp_str (char line1[],const char line2[]);
-int check_add_input(char *argv[], int cou, int *test, int *e);
-void help(void);
-
-//! @brief Bilds double from the line of chars
-//!
-//! @param *var Pointer to input's cell
-//!
-//! @return the code of output
-//!
+int CompStr (char line1[],const char line2[]);
+int CheckInputFlags(char *argv[], int ArgNum, int *test, int *e);
+MainRespond Print(double Sol1, double Sol2, int NumRoots, const char Form);
+void Help(void);
 
 /*!
     \brief Adjusts alternately input of 3 coefficients
@@ -37,223 +24,216 @@ void help(void);
     \param [in] *b_coef      Pointer for coefficient b's cell
     \param [in] *c_coef      Pointer for coefficient c's cell
 */
-void input(double *a_coef, double *b_coef, double *c_coef){
+void InputCoefficients(double *a_coef, double *b_coef, double *c_coef){
 
-    printf ("Please, enter the coefficients of your equation of the form a*x^2 + b*x + c = 0\n");
+    printf ("Please, enter the coefficients of your equation of the Form a*x^2 + b*x + c = 0\n");
 
-    check_input (a_coef, 'a');
-    check_input (b_coef, 'b');
-    check_input (c_coef, 'c');
-
-    //printf ("%lg %lg %lg", *a_coef, *b_coef, *c_coef);
+    CheckInput (a_coef, 'a');
+    CheckInput (b_coef, 'b');
+    CheckInput (c_coef, 'c');
 }
 
-int cons_get (double *a_coef, double *b_coef, double *c_coef, char *argv[], int cou, int *test,int *e){
+InputStatus ConsoleInput (double *a_coef, double *b_coef, double *c_coef, char *argv[], int ArgNum, int *TestFlag,int *FormFlag){
 
-    int add = 0;
-    add = check_add_input (argv, cou, test, e);
+    int ArgGet = 0;
+    const int HelpFlag = -1;
+    ArgGet = CheckInputFlags (argv, ArgNum, TestFlag, FormFlag);
 
-    if (cou - add == 3){
+    if (ArgNum - ArgGet == NumOfCoefs){ // 3? numOfCoefficients
 
-        get_num (a_coef, argv[1+add]);
-        get_num (b_coef, argv[2+add]);
-        get_num (c_coef, argv[3+add]);
+        InputStatus Status = OK;
 
-        return 1;
+        if ((Status = InputToDouble (a_coef, argv[ArgGet++])) != OK) return Status;
+        if ((Status = InputToDouble (b_coef, argv[ArgGet++])) != OK) return Status;
+        if ((Status = InputToDouble (c_coef, argv[ArgGet++])) != OK) return Status;
+
+        return Status;
     }
-    else if (cou - add == -1) return -1;
-    return 0;
+    else if (ArgNum - ArgGet == HelpFlag) {
+        return Help;
+    }
+    return ERROR;
 }
 
 /*!
-    \brief Processing input of one variable
+    \brief Processing input of one CoefValueiable
 
     \param [in]  *coef    Pointer for coefficient cell
     \param [in] letter    Name of coef that will be printed
 */
 
-void check_input (double *coef, char letter){
+void CheckInput (double *coef, char letter){
 
     printf ("%c: ", letter);
 
-    int error_type = 0;
-    char str [MAXLENGTH] = {0};
+    InputStatus status = OK;
+    char Buffer[MAXLENGTH] = {0};
 
-    while ((error_type = get_num (coef, arm_inp(str))) != 1){
-        switch (error_type){
-            case 0: {
+    while ((status = InputToDouble (coef, ManualInput(Buffer))) != OK){
+        switch (status) {
+            case ERROR: { // magic consts
                 printf ("Your input has wrong type, please, reenter coefficient %c\n", letter);
                 printf ("%c: ", letter);
                 break;
             }
-            case 2: {
+            case TOOBIG: {
                 printf ("Your input is too big, because you are pig. Please, reenter coefficient %c for this program edition.\n", letter);
                 printf ("%c: ", letter);
                 break;
             }
-            default: printf ("Error: InputError: error_type = %d", error_type);
+            case OK: printf("LogicError");
+
+            case Help: break;
+
+            default: printf ("Error: InputError: status = %d", status);
         }
-        for (int i = 0; i<MAXLENGTH;i++) str[i] = '\0';
+        for (int i = 0; i < MAXLENGTH; i++) Buffer[i] = '\0'; // Buffer clean
     }
 }
 
-int get_num (double *var, char str[]){
+InputStatus InputToDouble (double *CoefValue, char Buffer[]){
 
     int c = '\0';
-    int len = 0;
+    int Length = 0;
 
-    for (len = 0; len < MAXLENGTH && (*(str + len) != '\0') && c != '\n'; len++);
+    for (Length = 0; Length < MAXLENGTH && (*(Buffer + Length) != '\0') && c != '\n'; Length++);
 
-    double val = 0;
+    double Value = 0;
 
-    if (len) {
+    if (Length) {
 
-        int i = 0;
-        while ( *(str + i) == ' ') i++;
-        int sign = 0;
+        int Position = 0;
+        // Bufferip()
+        while ( Buffer[Position] == ' ') Position++;
 
-        int retr = pre_check(&sign, &val, str, &i, len);
-        //retr = dot_check(&power, &val, str, i, len);
+        int Sign = 0;
+        double Power = 1;
+        int EPower = 0;
+        int ESign = 0;
 
-        switch (retr){
+        InputStatus Status = OK ;
 
-            case 2  : return 2;
+        if ((Status = IntPart(&Sign, &Value, Buffer, &Position, Length))!= OK)
+            return Status;
 
-            case 0  : return 0;
+        if ((Status = DecimalPart(&Power, &Value, Buffer, &Position, Length)) != OK)
+            return Status;
 
-            default : break;
-        }
+        if ((Status = ExponentalPart(&ESign, &EPower, Buffer, &Position, Length))!= OK)
+            return Status;
 
-//-----------------------------------------------------------------------------
+        // tripSpaces()
+        while (*(Buffer + Length - 1) == ' ') Length--;
 
-        double power = 1;
-        retr = dot_check(&power, &val, str, &i, len);
-        //retr = dot_check(&power, &val, str, i, len);
+        if (Length != Position)
+            return ERROR;
 
-        switch (retr){
-
-            case 2  : return 2;
-
-            case 0  : return 0;
-
-            default : break;
-        }
-
-//-----------------------------------------------------------------------------
-
-        int epower = 0;
-        int esign = 0;
-
-        retr = e_check(&esign, &epower, str, &i, len);
-        //retr = dot_check(&power, &val, str, i, len);
-
-        switch (retr){
-
-            case 0  : return 0;
-
-            default : break;
-        }
-
-
-        while (*(str + len - 1) == ' ') len--;
-
-        if (len != i)  return 0;
-        *var = val * sign * pow (10, epower * esign) ;
-        return 1;
-
+        *CoefValue = Value * Sign * pow (10, EPower * ESign) ;
+        return  OK;
     }
     else
-        return 0;
+        return ERROR;
 }
 
-int dot_check(double *power, double *val,char *str, int *i, int len){
-        int dot_flag = 0;
-        dot_flag = (*(str + *i) == '.');
+InputStatus DecimalPart(double *Power, double *Value,char *Buffer, int *Position, int Length){
+        int DotFlag = 0;
+        DotFlag = (NextSym == '.');
 
-        for(*i += dot_flag; *i < len &&   *(str + *i) != ' ' &&
-                                        *(str + *i) != 'e' &&
-                                        *(str + *i) != 'E'; (*i)++){
+        // ne ponyantno
+        for(*Position += DotFlag; *Position < Length   &&
+                                        NextSym != ' ' &&
+                                        NextSym != 'e' &&
+                                        NextSym != 'E'; (*Position)++) {
 
-            if (isdigit (*(str + *i))){
+            if (isdigit (NextSym)) {
 
-                *power /= 10.0;
-                *val += (*(str + *i) - '0') * *power;
-                if (!isfinite (*val)) return 2;
+                *Power /= 10.0;
+                *Value += (NextSym - '0') * *Power;
+                if (!isfinite (*Value))
+                    return TOOBIG;
             }
-            else
-                return 0;
+            else {
+                return ERROR;
+            }
         }
-    return 1;
+    return OK;
 }
 
-int e_check (int *esign, int *epower, char *str, int *i, int len){
+InputStatus ExponentalPart (int *ESign, int *EPower, char *Buffer, int *Position, int Length){
 
-    int sign_flag = 0;
-    int e_flag = 0;
+    int SignFlag = 0;
+    int EFlag = 0;
 
-    e_flag = (*(str + *i) == 'e' || *(str + *i) == 'E');
-    *i += e_flag;
+    EFlag = (NextSym == 'e' || NextSym == 'E');
+    *Position += EFlag;
 
-    *esign = (*(str + *i) == '-') ? -1 : 1;
+    *ESign = (NextSym == '-') ? -1 : 1;
 
-    sign_flag = (*(str + *i) == '+' || *(str + *i) == '-');
+    SignFlag = (NextSym == '+' || NextSym == '-');
 
-    for(*i += sign_flag; *i < len && *(str + *i) != ' '; (*i)++){
-        if (isdigit (*(str + *i))){
-            *epower += (*epower) * 10 + (*(str + *i) - '0');
+    for(*Position += SignFlag; *Position < Length && NextSym != ' '; (*Position)++){
+
+        if (isdigit (NextSym)) {
+            *EPower += (*EPower) * 10 + (NextSym - '0');
         }
-        else
-            return 0;
+        else {
+            return ERROR;
+        }
     }
-    return 1;
+    return OK;
 }
 
-int pre_check(int *sign, double *val,char *str, int *i, int len) {
+InputStatus IntPart(int *Sign, double *Value,char *Buffer, int *Position, int Length) {
 
-    *sign = ( *(str + *i) == '-') ? -1 : 1;
-    int sign_flag = 0;
-    sign_flag = (*(str + *i) == '+' || *(str + *i) == '-');
+    *Sign = (NextSym == '-') ? -1 : 1;
+    int SignFlag = 0;
+    SignFlag = (NextSym == '+' || NextSym == '-');
 
-    for (*i += sign_flag; *i < len      &&
-                    *(str + *i) != '.'  &&
-                    *(str + *i) != ' '  &&
-                    *(str + *i) != 'e'  &&
-                    *(str + *i) != 'E'; (*i)++) {
+    for (*Position += SignFlag; *Position < Length  &&
+                                    NextSym != '.'  &&
+                                    NextSym != ' '  &&
+                                    NextSym != 'e'  &&
+                                    NextSym != 'E'; (*Position)++) {
 
-        if (isdigit (*(str + *i))) {
-            *val = 10.0 * *val + (*(str + *i) - '0');
-            if (!isfinite (*val))
-                return 2; }
-        else
-            return 0;
+        if (isdigit (NextSym)) {
+
+            *Value = 10.0 * *Value + (NextSym - '0');
+
+            if (!isfinite (*Value))
+                return TOOBIG;
+        }
+        else {
+            return ERROR;
+        }
     }
 
-    return 1;
+    return OK;
 }
 
-int comp_str(char line1[],const char line2[]){
+int CompStr(char line1[],const char line2[]){
 
 
-    int i = 0;
-    for (; line1[i] != '\0' && line2[i] != '\0' && line1[i] == line2[i];i++);
+    int Position = 0;
+    for (; line1[Position] != '\0' && line2[Position] != '\0'
+                                   && line1[Position] == line2[Position]; Position++);
 
-    return line1[i] == '\0' && line2[i] == '\0';
+    return line1[Position] == '\0' && line2[Position] == '\0';
 
 }
 
-char *arm_inp(char str[]){
+char *ManualInput(char Buffer[]){
 
-    int len = 0, c = 0;
+    int Length = 0, c = 0;
 
-    for (len = 0; len < MAXLENGTH && (c = getchar()) != EOF && c != '\n'; len++)
-        *(str + len) = (char) c;
+    for (Length = 0; Length < MAXLENGTH && (c = getchar()) != EOF && c != '\n'; Length++)
+        *(Buffer + Length) = (char) c;
 
-    return str;
+    return Buffer;
 }
 
-int check_add_input(char *argv[], int cou, int *test, int *e){
-    int c;
-    int add = 0;
+int CheckInputFlags(char *argv[], int ArgNum, int *TestFlag, int *FormFlag){
+    int c = 0; // uninit
+    int ArgGet = 0;
 
     while ((*++argv)[0] == '-' && !isdigit ((*argv)[0])){
 
@@ -261,16 +241,16 @@ int check_add_input(char *argv[], int cou, int *test, int *e){
 
                 switch (c){
 
-                    case 'h':{help(); return cou + 1;}
+                    case 'h':{Help(); return ArgNum + 1;}
 
-                    case 't':{ *test = 1; break;}
+                    case 't':{ *TestFlag = 1; break;}
 
-                    case 'e':{ *e    = 1; break;}
+                    case 'e':{ *FormFlag    = 1; break;}
 
                     case '-':{
 
-                        if (comp_str((*argv), "-test")) {*test = 1; goto skip;}
-                        else if (comp_str((*argv), "-help")) {help(); return cou + 1;}
+                        if (CompStr((*argv), "-test")) {*FormFlag = 1; goto skip;}
+                        else if (CompStr((*argv), "-help")) {Help(); return ArgNum + 1;}
                         else return 0;
                         break;
                     }
@@ -279,24 +259,95 @@ int check_add_input(char *argv[], int cou, int *test, int *e){
                 }
         }
         skip:
-        cou -= 1;
-        add++;
+        ArgNum -= 1;
+        ArgGet++;
     }
-    return add;
+    return ArgGet;
 }
 
-void help(void){
+/*!
+    \brief Adjusts onput of solutions
+
+    Use case branch by the type of output
+
+    \param [in] Sol1,Sol2    Solutions to print
+    \param [in] NumRoots    Number of roots
+    \param [in] e    Is out in E-Form
+
+    \return code-of-exit
+*/
+
+
+MainRespond FormOutput(double Sol1, double Sol2, int NumRoots, int EFlag){
+
+    assert (isfinite (Sol1));
+    assert (isfinite (Sol2));
+
+    if (EFlag){
+        const char Form = 'e';
+        return Print(Sol1, Sol2, NumRoots, Form);
+    }
+    else{
+        const char Form = 'g';
+        return Print(Sol1, Sol2, NumRoots, Form);
+    }
+
+}
+
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+MainRespond Print(double Sol1, double Sol2, int NumRoots, const char Form){
+
+    switch (NumRoots){
+
+            case 1 : {
+
+                char Format[LENGTH] = "";
+		        sprintf (Format, "The equation has only one root: \nx1 = %%%c", Form);
+		        printf (Format, Sol1);
+
+                return MAIN;
+            }
+
+            case 2 : {
+
+                char Format[LENGTH] = "";
+		        sprintf (Format, "The equation has only one root: \nx1 = %%%c" "\nx2 = %%%c", Form, Form);
+		        printf (Format, Sol1, Sol2);
+
+                return MAIN;
+            }
+
+            case 0 : {
+
+                printf ("Your equation has no roots");
+
+                return MAIN;
+            }
+
+            case INFROOTS : {
+
+                printf ("Your equation has INFROOTS roots. Go away in your dirty boots.");
+
+                return MAIN;
+            }
+
+            default : return MISTAKE;
+        }
+}
+
+#pragma GCC diagnostic error "-Wformat-nonliteral"
+
+void Help(void){
     printf(
         "Project [options] [coefs]  usage information\n"
         "Options\n"
 
-        "\t-h/--help     Display this information\n"
+        "\t-h/--Help     Display this information\n"
         "\t-t/--test     Do Unit-test at the star of solving\n"
-        "\t-e            Display roots in exponental form\n"
+        "\t-e            Display roots in exponental Form\n"
 
         "\n\n\n"
 
         "\tAFTER optional arguments enter 3 coefficients splitted with <Space>\n"
-
     );
 }

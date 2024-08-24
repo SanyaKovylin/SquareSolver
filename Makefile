@@ -40,7 +40,7 @@ run:
 	$(Build)/$(Exe)
 
 clean:
-	rm $(Build)
+	rm -rf ./$(Build)
 
 test:
 	echo $(Sources)
