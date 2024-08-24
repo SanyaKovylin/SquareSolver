@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <ctype.h>
-#include "../Include\sq_sol.h"
-#include "../Include\get.h"
+#include "sq_sol.h"
+#include "get.h"
 
 
 #include <windows.h>
@@ -14,7 +14,7 @@ int tester (void);
 
 /*! \brief Implements the solving
 
-    Starts the program
+    Starts the programs
 
     \returns code-of-exit
 */
@@ -74,7 +74,7 @@ int tester(void){
     };
 
     struct test tests[] = {
-
+//          a      b       c    nroots         x1         x2
             0,     0,      0, INFROOTS,         1,         0,
             0,     1,      0,        1,         0,         0,
             0,     0,      1,        0,         0,         0,
