@@ -187,9 +187,9 @@ int output(double sol1, double sol2, int num_roots, int e){
     assert (isfinite (sol2));
     if (e){
 
-        const char e[] = "e";
+        const char e1[] = "e";
         const char e2[] = "e";
-        return e_print(sol1, sol2, num_roots, e, e2);
+        return e_print(sol1, sol2, num_roots, e1, e2);
     }
 
     const char g[] = "g";

@@ -257,7 +257,7 @@ int check_add_input(char *argv[], int cou, int *test, int *e){
 
     while ((*++argv)[0] == '-' && !isdigit ((*argv)[0])){
 
-        while (c = *++argv[0]){
+        while ((c = *++argv[0])){
 
                 switch (c){
 

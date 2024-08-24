@@ -6,6 +6,8 @@
 #include <ctype.h>
 #include "../Include\sq_sol.h"
 #include "../Include\get.h"
+
+
 #include <windows.h>
 
 int tester (void);
