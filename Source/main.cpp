@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include <ctype.h>
+#include <windows.h>
 #include "sq_sol.h"
 #include "get.h"
-#include <windows.h>
 
 int TestofSolver(void);
 
@@ -30,16 +30,18 @@ int main (int argc, char *argv[]){
     }
     else {
 
-        int TestFlag = 0;
+        int TestFlag = 0;  // shouldTest needTest bool  expForm  isDebug  DebugActive
         int InputStatus = ConsoleInput(&CoefA, &CoefB, &CoefC, argv++, argc--, &TestFlag, &FormFlag);
                                                               //Avoid Path
-        if (TestFlag) TestofSolver();
+        if (TestFlag)
+            TestofSolver();
+
         if (!InputStatus) {
             printf("INPUTERROR");
             return MISTAKE;
         }
         else if (InputStatus == HELP) {
-            return 2;
+            return HELP;
         }
     }
 
@@ -61,9 +63,7 @@ int main (int argc, char *argv[]){
 
 int TestofSolver(void){
 
-    HANDLE  hConsole;
-
-    hConsole = GetStdHandle(STD_OUTPUTestHANDLE);
+    HANDLE hConsole == GetStdHandle(STD_OUTPUTestHANDLE);
 
     struct Test {
 
@@ -78,7 +78,9 @@ int TestofSolver(void){
     };
 
     struct Test Tests[] = {
+//--------------------------------------------------------------
 //          a      b       c NumOfRoots         x1         x2
+//--------------------------------------------------------------
             0,     0,      0, INFROOTS,         1,         0,
             0,     1,      0,        1,         0,         0,
             0,     0,      1,        0,         0,         0,
@@ -107,13 +109,13 @@ int TestofSolver(void){
             printf ("Test %.3llu:  ", i);
             // txSetConsoleAttr(0x0c);
             SetConsoleTextAttribute(hConsole, 12);
-            printf("Failed \n");
+            $r printf("Failed \n");
             SetConsoleTextAttribute(hConsole, 4);
-            printf ("Out: x1 = %g x2 = %g NumOfRoots = %d\n", TestSol1, TestSol2, TestNumOfRoots);
+            $b printf ("Out: x1 = %g x2 = %g NumOfRoots = %d\n", TestSol1, TestSol2, TestNumOfRoots);
             SetConsoleTextAttribute(hConsole, 11);
             printf ("Expected: x1 = %g x2 = %g NumOfRoots = %d\n", Tests[i].Sol1, Tests[i].Sol2, Tests[i].NumOfRoots);
             SetConsoleTextAttribute(hConsole, 7);;
-
+            $d
         }
         else{
 

@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
+#include <string.h>
 #include "sq_sol.h"
 #include "get.h"
-#include <string.h>
+
 
 Cases SquareSolve (double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2); //< Solver for square equations by coefficients
 Cases LinearSolve (double CoefB, double CoefC, double* Sol1); //< Solver for linear equations by coefficients
@@ -22,7 +23,7 @@ Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
 
 //-----------------------------------------------------------------------------
 
-/*!
+/*! ---------------------------------------------------------------------------
     \brief Implementing branching between solving Cases and unificating answers
 
     If equation has more or less than 2 roots, take it as a standart that
@@ -34,9 +35,9 @@ Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
     \param [in] *Sol1, *Sol2            Pointers to the answers' cells
 
     \returns Number of roots
-*/
+-------------------------------------------------------------------------------*/
 
-Cases Solve(double CoefA,double CoefB, double CoefC, double *Sol1, double *Sol2){
+Cases Solve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2){
 
     assert (isfinite (CoefA));
     assert (isfinite (CoefB));
@@ -107,7 +108,7 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
         *Sol1 = -CoefB * InvCoefAx2;
         *Sol2 = *Sol1;
 
-        return ONE_ROOT; // ??????
+        return ONE_ROOT; // And I'm Groot. // ??????
     }
 
     else if (Discr > 0){
@@ -116,7 +117,7 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
         *Sol1 = (-CoefB + Discr) * InvCoefAx2;
         *Sol2 = (-CoefB - Discr) * InvCoefAx2;
 
-        return TWO_ROOTS;
+        return TWO_ROOTS; // And we are Groots.
     }
 
     *Sol1 = 0;
@@ -140,9 +141,9 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
 
 Cases LinearSolve (double CoefB, double CoefC, double *Sol1) {
 
-    assert (isfinite (CoefB));
+    assert (isfinite (CoefB)); assert (!IsZero (CoefB));
+
     assert (isfinite (CoefC));
-    assert (!IsZero (CoefB));
 
     assert (Sol1 != NULL);
 

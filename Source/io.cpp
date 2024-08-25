@@ -81,12 +81,15 @@ void CheckInput (double *coef, char letter){
                 printf ("%c: ", letter);
                 break;
             }
-            case OK: printf("LogicError");
-
-            case Help: break;
+            case OK: {
+                 printf("LogicError");
+                 break;
+            }
+            case HELP: break;
 
             default: printf ("Error: InputError: status = %d", status);
         }
+
         for (int i = 0; i < MAXLENGTH; i++) Buffer[i] = '\0'; // Buffer clean
     }
 }
@@ -96,7 +99,8 @@ InputStatus InputToDouble (double *CoefValue, char Buffer[]){
     int c = '\0';
     int Length = 0;
 
-    for (Length = 0; Length < MAXLENGTH && (*(Buffer + Length) != '\0') && c != '\n'; Length++);
+    for (Length = 0; Length < MAXLENGTH && (*(Buffer + Length) != '\0') && c != '\n'; Length++)
+        ;
 
     double Value = 0;
 
@@ -245,12 +249,12 @@ int CheckInputFlags(char *argv[], int ArgNum, int *TestFlag, int *FormFlag){
 
                     case 't':{ *TestFlag = 1; break;}
 
-                    case 'e':{ *FormFlag    = 1; break;}
+                    case 'e':{ *FormFlag = 1; break;}
 
                     case '-':{
 
-                        if (CompStr((*argv), "-test")) {*FormFlag = 1; goto skip;}
-                        else if (CompStr((*argv), "-help")) {Help(); return ArgNum + 1;}
+                        if      (CompStr((*argv), "-test")) { *FormFlag = 1; goto skip;  }
+                        else if (CompStr((*argv), "-help")) { Help(); return ArgNum + 1; }
                         else return 0;
                         break;
                     }
@@ -295,6 +299,7 @@ MainRespond FormOutput(double Sol1, double Sol2, int NumRoots, int EFlag){
 }
 
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
+
 MainRespond Print(double Sol1, double Sol2, int NumRoots, const char Form){
 
     switch (NumRoots){
@@ -342,7 +347,7 @@ void Help(void){
         "Project [options] [coefs]  usage information\n"
         "Options\n"
 
-        "\t-h/--Help     Display this information\n"
+        "\t-h/--help     Display this information\n"
         "\t-t/--test     Do Unit-test at the star of solving\n"
         "\t-e            Display roots in exponental Form\n"
 
