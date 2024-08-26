@@ -8,14 +8,15 @@
 enum MainRespond {
     MAIN = 1,
     HELP_CALL = 2,
-    MISTAKE = 0,
+    MISTAKE = 0
 };
 
 enum InputStatus {
-    ERROR  = 0,
+    INPERROR  = 0,
     OK     = 1,
     TOOBIG = 2,
     HELP   = 3,
+    NOSOLVE = 4
 };
 
 /// \brief Defined vars for case identification
@@ -28,8 +29,11 @@ enum Cases {
 };
 
 void InputCoefficients (double *a_coef, double *b_coef, double *c_coef);//< Input function
+InputStatus ConsoleInput (double *a_coef, double *b_coef, double *c_coef, char *line[], int cou, int *test, int *e);
 Cases Solve (double a_coef, double b_coef, double c_coef, double *sol1, double *sol2);//< Solver for all cases of 2-power polynomial
 MainRespond FormOutput (double sol1, double sol2, int num_roots, int e);//< Output function
+
+InputStatus InputToDouble (double *CoefValue, char Buffer[]);
 
 int IsZero (double dble); // Function for approx comparing double and 0
 int CompareDoubles (double dble1, double dble2); //< Function for approx comparing two doubles

@@ -7,11 +7,10 @@
 #include <assert.h>
 #include <string.h>
 #include "sq_sol.h"
-#include "get.h"
 
 
-Cases SquareSolve (double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2); //< Solver for square equations by coefficients
-Cases LinearSolve (double CoefB, double CoefC, double* Sol1); //< Solver for linear equations by coefficients
+Cases SquareSolve (double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2); //< Solver for square equations by coefficients
+Cases LinearSolve (double CoefB, double CoefC, double* Solution1); //< Solver for linear equations by coefficients
 Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
 
 /** \defgroup Main_part Main_part
@@ -27,25 +26,25 @@ Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
     \brief Implementing branching between solving Cases and unificating answers
 
     If equation has more or less than 2 roots, take it as a standart that
-    Sol1 = Sol2
+    Solution1 = Solution2
 
     And if they are undefined (0 or INF) assign them 0-valued
 
     \param [in] CoefA, CoefB, CoefC  Value of coefficient a, b, c
-    \param [in] *Sol1, *Sol2            Pointers to the answers' cells
+    \param [in] *Solution1, *Solution2            Pointers to the answers' cells
 
     \returns Number of roots
 -------------------------------------------------------------------------------*/
 
-Cases Solve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2){
+Cases Solve(double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2){
 
     assert (isfinite (CoefA));
     assert (isfinite (CoefB));
     assert (isfinite (CoefC));
 
-    assert (Sol1 != NULL);
-    assert (Sol2 != NULL);
-    assert (Sol1 != Sol2);
+    assert (Solution1 != NULL);
+    assert (Solution2 != NULL);
+    assert (Solution1 != Solution2);
 
     Cases NumOfRoots = TOXIC;
 
@@ -55,18 +54,18 @@ Cases Solve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2
         if (IsZero (CoefB)){
 
             NumOfRoots = SpecialCase (CoefC);
-            *Sol1 = 0.0;
-            *Sol2 = 0.0;
+            *Solution1 = 0.0;
+            *Solution2 = 0.0;
         }
         else {
-            NumOfRoots = LinearSolve (CoefB, CoefC, Sol1);
+            NumOfRoots = LinearSolve (CoefB, CoefC, Solution1);
 
-            *Sol2 = *Sol1;
+            *Solution2 = *Solution1;
         }
 
     }
     else {
-        NumOfRoots = SquareSolve (CoefA, CoefB, CoefC, Sol1, Sol2);
+        NumOfRoots = SquareSolve (CoefA, CoefB, CoefC, Solution1, Solution2);
     }
 
     return NumOfRoots;
@@ -79,7 +78,7 @@ Cases Solve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2
     \brief Solver for square equations by coefficients
 
     \param [in] CoefA, CoefB, CoefC      Value of coefficient a, b, c
-    \param [in] *Sol1, *Sol2                Pointers to the answers' cells
+    \param [in] *Solution1, *Solution2                Pointers to the answers' cells
 
     \warning CoefA != 0 (We assume that equation actually is Square)
 
@@ -87,16 +86,16 @@ Cases Solve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2
 */
 
 // return enum
-Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double *Sol2){
+Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2){
 
     assert (isfinite (CoefA));
     assert (isfinite (CoefB));
     assert (isfinite (CoefC));
     assert (!IsZero (CoefA));
 
-    assert (Sol1 != NULL);
-    assert (Sol2 != NULL);
-    assert (Sol1 != Sol2);
+    assert (Solution1 != NULL);
+    assert (Solution2 != NULL);
+    assert (Solution1 != Solution2);
 
     double Discr = 0;  // The discriminant of equation and its square root
     double InvCoefAx2 = 1 / (CoefA * 2); // Due to inevitability of computation we take it once
@@ -105,8 +104,8 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
 
     if (IsZero (Discr)){
 
-        *Sol1 = -CoefB * InvCoefAx2;
-        *Sol2 = *Sol1;
+        *Solution1 = -CoefB * InvCoefAx2;
+        *Solution2 = *Solution1;
 
         return ONE_ROOT; // And I'm Groot. // ??????
     }
@@ -114,14 +113,14 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
     else if (Discr > 0){
 
         Discr = sqrt (Discr);
-        *Sol1 = (-CoefB + Discr) * InvCoefAx2;
-        *Sol2 = (-CoefB - Discr) * InvCoefAx2;
+        *Solution1 = (-CoefB + Discr) * InvCoefAx2;
+        *Solution2 = (-CoefB - Discr) * InvCoefAx2;
 
         return TWO_ROOTS; // And we are Groots.
     }
 
-    *Sol1 = 0;
-    *Sol2 = *Sol1;
+    *Solution1 = 0;
+    *Solution2 = *Solution1;
 
     return NO_ROOTS;
 }
@@ -132,22 +131,22 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Sol1, double
     \brief Solver for linear equations by coefficients
 
     \param [in] CoefB, CoefC    Value of coefficient a, b, c
-    \param [in] *Sol1             Pointer to the answer's cell
+    \param [in] *Solution1             Pointer to the answer's cell
 
     \warning CoefB != 0 (We assume that equation actually is Linear)
 
     \returns Number of roots
 */
 
-Cases LinearSolve (double CoefB, double CoefC, double *Sol1) {
+Cases LinearSolve (double CoefB, double CoefC, double *Solution1) {
 
     assert (isfinite (CoefB)); assert (!IsZero (CoefB));
 
     assert (isfinite (CoefC));
 
-    assert (Sol1 != NULL);
+    assert (Solution1 != NULL);
 
-    *Sol1 = -CoefC / CoefB;
+    *Solution1 = -CoefC / CoefB;
 
     return ONE_ROOT;
 }
@@ -208,17 +207,17 @@ int IsZero (double Value){
 /*!
     \brief Comparing 2 doubles
 
-    \param [in] val1, val2   Doubles to compare
+    \param [in] Value1, Value2   Doubles to compare
 
-    \returns Result of comparing (True <==> (val1 == val2))
+    \returns Result of comparing (True <==> (Value1 == Value2))
 */
 
-int CompareDoubles(double val1, double val2){
+int CompareDoubles(double Value1, double Value2){
 
-    assert (isfinite (val1));
-    assert (isfinite (val2));
+    assert (isfinite (Value1));
+    assert (isfinite (Value2));
 
-    return EPS > fabs (val1 - val2);
+    return EPS > fabs (Value1 - Value2);
 }
 // @}
 

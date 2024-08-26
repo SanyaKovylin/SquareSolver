@@ -11,7 +11,7 @@ H = $(wildcard *.h)
 
 Build = Build
 Source = Source
-Exe = Solver.exe
+Exe = Prog.exe
 
 all: $(Build)/$(Exe)
 
@@ -23,7 +23,6 @@ $(Build)/$(Exe): $(Objects) | $(Build)
 
 $(Build):
 	mkdir -p $(Build)
-	cd $(Source) && cp *.txt ../ && cd .. && mv *.txt $(Build)
 
 cleanup:
 ifdef Cpp
@@ -42,7 +41,6 @@ run:
 
 clean:
 	rm -rf ./$(Build)
-
 
 test:
 	echo $(Sources)
