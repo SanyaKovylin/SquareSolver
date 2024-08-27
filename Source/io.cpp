@@ -33,7 +33,7 @@ InputStatus ExponentalPart (int *esign, int *epower, char *str, int *i, int len)
 InputStatus IntPart(int *sign, double *val,char *str, int *i, int len);
 
 void Help(void);
-bool CompStr(const char line1[], const char line2[]);
+bool CompStr(const char Line1[], const char Line2[]);
 
 int ParseConsoleArgument(char *argv[], int CurrentPos, int CurrentArg, struct Flags *ConsFlags);
 
@@ -42,11 +42,14 @@ const int ConsFlagErr = -2;
 /*!
     \brief Adjusts alternately input of 3 coefficients
 
-    \param [in] *CoefA      Pointer for coefficient a's cell
-    \param [in] *CoefB      Pointer for coefficient b's cell
-    \param [in] *CoefC      Pointer for coefficient c's cell
+    \param [in] *CoefA, *Coef B, CoefC     Pointers to coefficients' cells
+
 */
 void InputCoefficients(double *CoefA, double *CoefB, double *CoefC){
+
+    assert(CoefA != NULL);
+    assert(CoefB != NULL);
+    assert(CoefC != NULL);
 
     printf ("Please, enter the coefficients of your equation of the form a*x^2 + b*x + c = 0\n");
 
@@ -55,9 +58,25 @@ void InputCoefficients(double *CoefA, double *CoefB, double *CoefC){
     CheckInput (CoefC, 'c');
 }
 
+/*!
+    \brief Adjusts input of coefficients and flags from console
+
+    \param [in] *CoefA, *Coef B, CoefC     Pointers to coefficients' cells
+    \param [in] *argv[], ArgNum            Standart console input (ArgNum = argc - 1)
+    \param [in] *NeedTest *IsExp           Pointers to console flags' cells
+
+*/
+
 InputStatus ConsoleInput (double *CoefA, double *CoefB, double *CoefC,
                             char *argv[], int ArgNum,
                             int *NeedTest, int *IsExp){
+
+    assert(CoefA != NULL);
+    assert(CoefB != NULL);
+    assert(CoefC != NULL);
+    assert(argv != NULL);
+    assert(NeedTest != NULL);
+    assert(IsExp != NULL);
 
     int ArgGet = 0;
     const int NeedHelp = -1;
@@ -82,13 +101,15 @@ InputStatus ConsoleInput (double *CoefA, double *CoefB, double *CoefC,
 }
 
 /*!
-    \brief Processing input of one CoefValueiable
+    \brief Processing input of one Coefficient Variable
 
     \param [in]  *Coef    Pointer for coefficient cell
-    \param [in] Letter    Name of Coef that will be printed
+    \param [in]  Letter    Name of Coef that will be printed
 */
 
 void CheckInput (double *Coef, char Letter){
+
+    assert(Coef != NULL);
 
     printf ("%c: ", Letter);
 
@@ -97,7 +118,7 @@ void CheckInput (double *Coef, char Letter){
 
     while ((Status = InputToDouble (Coef, ManualInput(Buffer))) != OK){
         switch (Status) {
-            case INPERROR: { // magic consts
+            case INPERROR: {
                 printf ("Your input has wrong type, please,"
                                         "reenter coefficient %c\n", Letter);
                 printf ("%c: ", Letter);
@@ -125,7 +146,24 @@ void CheckInput (double *Coef, char Letter){
     }
 }
 
+/** \defgroup StrToD All
+
+    \brief String to double
+
+    @{
+*/
+
+/*!
+    \brief My strtod
+
+    \param [in] Buffer          From char
+    \param [out] *CoefValue     To double
+
+*/
+
 InputStatus InputToDouble (double *CoefValue, char Buffer[]){
+
+    assert(CoefValue != NULL);
 
     int Length = 0;
 
@@ -167,12 +205,26 @@ InputStatus InputToDouble (double *CoefValue, char Buffer[]){
     }
 }
 
+/**  \brief Processes part of double between the dot and the exponental part
+
+    \param [out] *Power             Pointer to var that contains number of digits after dot
+    \param [out] *Value             Pointer to var that contains the (Value of double) * Power
+    \param [in]  *Buffer, Position  Pointers to char and its processing point
+    \param [in]  Length             Length of the char
+
+    \returns Status of processing
+*/
 
 InputStatus DecimalPart(double *Power, double *Value,
                         char *Buffer, int *Position, int Length){
+
+    assert(Power != NULL);
+    assert(Value != NULL);
+    assert(Buffer != NULL);
+    assert(Position != NULL);
+
     bool WasDot = (NextSym == '.');
 
-    // ne ponyantno
     for(*Position += WasDot; *Position < Length &&
                               NextSym != ' '    &&
                               NextSym != 'e'    &&
@@ -193,12 +245,32 @@ InputStatus DecimalPart(double *Power, double *Value,
 }
 
 void BufStrip(char *Buffer, int *Length, int *Position){
+
+    assert(Buffer != NULL);
+    assert(Length != NULL);
+
     while (Buffer[*Position] == ' ') (*Position) += 1;
     while (*(Buffer + *Length - 1) == ' ') (*Length)--;
 }
 
+/**  \brief Processes part of double after the exponental part
+
+    \param [out] *EPower            Pointer to var that contains Value of power of 10 by which we must multiply the Value
+    \param [out] *ESign             Pointer to var that contains the sign of power of 10
+    \param [out] *Value             Pointer to var that contains the Value of double
+    \param [in]  *Buffer, Position  Pointers to char and its processing point
+    \param [in]  Length             Length of the char
+
+    \returns Status of processing
+*/
+
 InputStatus ExponentalPart (int *ESign, int *EPower,
                             char *Buffer, int *Position, int Length){
+
+    assert(ESign != NULL);
+    assert(EPower != NULL);
+    assert(Position != NULL);
+    assert(Buffer != NULL);
 
     int WasSign = 0;
     int IsExp = 0;
@@ -222,8 +294,23 @@ InputStatus ExponentalPart (int *ESign, int *EPower,
     return OK;
 }
 
+/**  \brief Processes part of double between the dot and the exponental part
+
+    \param [out] *Sign              Pointer to var that contains the sign of the double
+    \param [out] *Value             Pointer to var that contains the (Value of double) * Power
+    \param [in]  *Buffer, Position  Pointers to char and its processing point
+    \param [in]  Length             Length of the char
+
+    \returns Status of processing
+*/
+
 InputStatus IntPart(int *Sign, double *Value,
                     char *Buffer, int *Position, int Length) {
+
+    assert(Buffer != NULL);
+    assert(Sign != NULL);
+    assert(Value != NULL);
+    assert(Position != NULL);
 
     *Sign = (NextSym == '-') ? -1 : 1;
     bool WasSign = (NextSym == '+' || NextSym == '-');
@@ -249,17 +336,38 @@ InputStatus IntPart(int *Sign, double *Value,
     return OK;
 }
 
-bool CompStr(const char *line1, const char *line2){
+// }@
+
+/** \brief Function for comparing two strings
+
+    \param [in] Line1, Line2     Chars to compare
+
+    \returns The result of compare
+*/
+
+bool CompStr(const char *Line1, const char *Line2){
+
+    assert(Line1 != NULL);
+    assert(Line2 != NULL);
 
     int Position = 0;
-    for (; line1[Position] != '\0' && line2[Position] != '\0'
-                                   && line1[Position] == line2[Position]; Position++);
+    for (; Line1[Position] != '\0' && Line2[Position] != '\0'
+                                   && Line1[Position] == Line2[Position]; Position++);
 
-    return line1[Position] == '\0' && line2[Position] == '\0';
+    return Line1[Position] == '\0' && Line2[Position] == '\0';
 
 }
 
-char *ManualInput(char Buffer[]){
+/** \brief Function for inputing the string from the stdin
+
+    \param [in] Buffer     Pointer to the container where should put the string
+
+    \returns Inputed string
+*/
+
+char *ManualInput(char *Buffer){
+
+    assert(Buffer != NULL);
 
     int Length = 0, c = 0;
 
@@ -269,12 +377,21 @@ char *ManualInput(char Buffer[]){
     return Buffer;
 }
 
-// struct {}
-// struct {NeedTest, IsExp, NeedHelp}
+/** \brief Processing Console flags
 
+    \param [in] argv, ArgNum        Standart console input (ArgNum = (argc - 1))
+    \param [out] NeedTest, IsExp    Flags from console
+
+    \returns number of collected flags or ArgNm + 1 if Help called
+*/
 
 
 int CheckInputFlags(char *argv[], int ArgNum, int *NeedTest, int *IsExp){
+
+    assert(NeedTest != NULL);
+    assert(argv != NULL);
+    assert(IsExp != NULL);
+
     int ArgGet = 0;
     int CurrentArg = 1;
     struct Flags ConsoleFlags = {0, 0, 0};
@@ -307,7 +424,20 @@ int CheckInputFlags(char *argv[], int ArgNum, int *NeedTest, int *IsExp){
     return ArgGet;
 }
 
+/** \brief Processing each Console flag
+
+    \param [in] argv                        Standart console input
+    \param [in] CurrentPos, CurrentFlag     Pointers to the processing symbol
+    \param [out] ConsFlags                  Contains the values of all flags
+
+    \returns if the flag was got correctly
+*/
+
 int ParseConsoleArgument(char *argv[], int CurrentPos, int CurrentArg, struct Flags *ConsFlags){
+
+    assert(argv != NULL);
+    assert(ConsFlags != NULL);
+
     char c = '\0';
     while ((c = argv[CurrentArg][CurrentPos])){
         switch (c){
@@ -347,13 +477,11 @@ int ParseConsoleArgument(char *argv[], int CurrentPos, int CurrentArg, struct Fl
 }
 
 /*!
-    \brief Adjusts onput of solutions
+    \brief Adjusts branch of output by the its form
 
-    Use case branch by the type of output
-
-    \param [in] Solution1,Solution2    Solutions to print
-    \param [in] NumRoots    Number of roots
-    \param [in] e    Is out in E-Form
+    \param [in] Solution1,Solution2     Solutions to print
+    \param [in] NumRoots                Number of roots
+    \param [in] IsExp                   Is out in Exsponental form
 
     \return code-of-exit
 */
@@ -374,6 +502,16 @@ MainRespond FormOutput(double Solution1, double Solution2, int NumRoots, int IsE
     }
 
 }
+
+/*!
+    \brief Adjusts branch of output by the its form
+
+    \param [in] Solution1, Solution2    Solutions to print
+    \param [in] NumRoots                Number of roots
+    \param [in] Form                    Form in which solutions should be printed
+
+    \return code-of-exit
+*/
 
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
 
@@ -418,6 +556,8 @@ MainRespond Print(double Solution1, double Solution2, int NumRoots, const char F
 }
 
 #pragma GCC diagnostic error "-Wformat-nonliteral"
+
+///  \brief    Prints --help for console flag
 
 void Help(void){
     printf(

@@ -57,14 +57,7 @@ int main (int argc, char *argv[]){
     return FormOutput (Solution1, Solution2, NumOfRoots, IsExp);
 }
 
-//=============================================================================
 
-/*! \brief Implements the Testing
-
-    Enters several Tests to the Solve function and checks output
-
-    \returns If there any mistakes
-*/
 
 
 

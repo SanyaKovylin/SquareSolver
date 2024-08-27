@@ -13,7 +13,7 @@ Cases SquareSolve (double CoefA, double CoefB, double CoefC, double *Solution1, 
 Cases LinearSolve (double CoefB, double CoefC, double* Solution1); //< Solver for linear equations by coefficients
 Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
 
-/** \defgroup Main_part Main_part
+/** \defgroup Main_part Solving_part
 
     \brief General functions of solving
 

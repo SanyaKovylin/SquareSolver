@@ -28,6 +28,14 @@ struct Test {
         double Solution2;
     };
 
+/*! \brief Implements the Testing
+
+    Enters several Tests to the Solve function and checks output
+    Tests are brought from Source/test.txt file
+
+    \returns Prints the result of all tests
+*/
+
 int TestofSolver(void){
 
     int NumOfTests = 0;
@@ -57,24 +65,6 @@ int TestofSolver(void){
                                             &(Tests[i].Solution2));
     }
 
-/*
-//--------------------------------------------------------------
-//          CoefA      CoefB       CoefC NumOfRoots         x1         x2
-//--------------------------------------------------------------
-            0,     0,      0, INFROOTS,         1,         0,
-            0,     1,      0,        1,         0,         0,
-            0,     0,      1,        0,         0,         0,
-            0,     1,      1,        1,        -1,        -1,
-            1,     0,      0,        1,         0,         0,
-            1,     0,      1,        0,         0,         0,
-            1,     1,      0,        2,         0,        -1,
-            1,     1,      1,        0,         0,         0,
-         1.54, -5.36,     -2,        2,   3.82045, -0.339934,
-        101.1,    -5, -64.52,        2,  0.823972, -0.774516,
-          1.2,   2.4,    1.2,        1,        -1,        -1,
-    };
-*/
-
     int TestNumOfRoots = TOXIC;
     double TestSol1 = TOXIC, TestSol2 = TOXIC;
 
@@ -91,17 +81,22 @@ int TestofSolver(void){
             // txSetConsoleAttr(0x0c);
             ChangeColourTo(Red);
             printf("Failed \n");
+
             ChangeColourTo(LightRed);
             printf ("Out: x1 = %g x2 = %g NumOfRoots = %d\n", TestSol1, TestSol2, TestNumOfRoots);
+
             ChangeColourTo(LightBlue);
             printf ("Expected: x1 = %g x2 = %g NumOfRoots = %d\n", Tests[i].Solution1, Tests[i].Solution2, Tests[i].NumOfRoots);
+
             ChangeColourTo(Default);
         }
         else{
 
             printf("Test %.3d:  ", i);
+
             ChangeColourTo(Green);
             printf("OK \n");
+
             ChangeColourTo(Default);
         }
     }
