@@ -345,7 +345,7 @@ InputStatus IntPart(int *Sign, double *Value,
 
         *Value = 10.0 * *Value + (NextSym - '0');
 
-        if (!isfinite (*Value)){
+        if (!isfinite (*Value)) {
             return TOOBIG;
         }
     }
@@ -453,8 +453,8 @@ int ParseConsoleArgument(const char *argv[], int CurrentPos, int CurrentArg, str
     assert (ConsFlags != NULL);
 
     char Symbol = '\0';
-    while ((Symbol = argv[CurrentArg][CurrentPos])){
-        switch (Symbol){
+    while ((Symbol = argv[CurrentArg][CurrentPos])) {
+        switch (Symbol) {
 
             case HFlag: {
                 ConsFlags->NeedHelp = 1;
@@ -568,12 +568,12 @@ MainRespond Print(double Solution1, double Solution2, Cases NumRoots, const char
         }
 
         case TOXIC : {
-            assert(false);
+            assert (false);
             return MISTAKE;
         }
 
         default : {
-            assert(false);
+            assert (false);
             return MISTAKE;
         }
     }

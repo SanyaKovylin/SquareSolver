@@ -7,11 +7,7 @@
 #include "test.h"
 #include "colors.h"
 
-//        MaxLength of what???????????????? FIXME:
-const int MxLngth = 20;
-
 void ChangeColourTo(Colour color);
-//struct Test *ReadTests(const char* file , struct Test Tests[], int *CountLines);
 
 const int NumOfArgs = 6;
 const int MaxTests = 100;
@@ -36,16 +32,14 @@ struct Test {
     \returns Prints the result of all tests
 */
 
-#define MAX(x, y) ((x) > (y) ? (x) : (y))
-
 int TestofSolver (void){
 
     int NumOfTests = 0;
-    struct Test Tests[MxLngth] = {};
+    struct Test Tests[MaxTests] = {};
 
     FILE *fp = fopen ("Source/tests.txt", "r");
 
-    if (fp == NULL){
+    if (fp == NULL) {
 
         printf  ( "File access Error\n"
                 " Please, check the name of the file\n");
@@ -54,24 +48,22 @@ int TestofSolver (void){
 
     int c = fgetc (fp); // KOLYA: теперь знает разницу!
 
-    while ((c = fgetc (fp)) != EOF){
+    while ((c = fgetc (fp)) != EOF) {
 
         if (c == '\n'){
             NumOfTests++;
         }
     }
 
-    if (NumOfTests > MxLngth){
+    if (NumOfTests > MaxTests) {
 
         printf("Noo Many Test");
         return 0;
     }
 
-    // FIXME: прога крашается!!!!!!!! можно surpass MxLngth
-
     rewind(fp);
 
-    for (int i = 0; i < NumOfTests; i++){
+    for (int i = 0; i < NumOfTests; i++) {
         fscanf(fp,"%lg %lg %lg %d %lg %lg", &(Tests[i].CoefA),
                                             &(Tests[i].CoefB),
                                             &(Tests[i].CoefC),
@@ -83,7 +75,7 @@ int TestofSolver (void){
     int TestNumOfRoots = TOXIC;
     double TestSol1 = TOXIC, TestSol2 = TOXIC;
 
-    for (int i = 0; i < NumOfTests; i++){
+    for (int i = 0; i < NumOfTests; i++) {
 
         TestNumOfRoots = Solve(Tests[i].CoefA, Tests[i].CoefB, Tests[i].CoefC, &TestSol1, &TestSol2);
 
@@ -105,7 +97,7 @@ int TestofSolver (void){
 
             ChangeColourTo (Default);
         }
-        else{
+        else {
 
             printf ("Test %.3d:  ", i);
 
@@ -121,6 +113,7 @@ int TestofSolver (void){
 
 
 void ChangeColourTo (Colour colour){
+s
     HANDLE hConsole = GetStdHandle (STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute (hConsole, colour);
 }

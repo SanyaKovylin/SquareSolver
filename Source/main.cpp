@@ -33,7 +33,7 @@ int main (const int argc, const char *argv[]){
         int InputStatus = ConsoleInput(&CoefA,  &CoefB,    &CoefC,
                                          argv,    argc,    &ConsoleFlags);
 
-        if (ConsoleFlags.NeedTest){
+        if (ConsoleFlags.NeedTest) {
             TestofSolver();
         }
 
