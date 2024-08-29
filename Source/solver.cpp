@@ -6,12 +6,13 @@
 #include <math.h>
 #include <assert.h>
 #include <string.h>
-#include "sq_sol.h"
+#include "io.h"
+#include "solver.h"
 
 
-Cases SquareSolve (double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2); //< Solver for square equations by coefficients
-Cases LinearSolve (double CoefB, double CoefC, double* Solution1); //< Solver for linear equations by coefficients
-Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
+Cases SquareSolve         (double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2); //< Solver for square equations by coefficients
+Cases LinearSolve         (double CoefB, double CoefC, double* Solution1); //< Solver for linear equations by coefficients
+Cases ZeroPowPolynomSolve (double CoefC); //< Solver for 0-power equation by coefficient
 
 /** \defgroup Main_part Solving_part
 
@@ -36,7 +37,7 @@ Cases SpecialCase (double CoefC); //< Solver for 0-power equation by coefficient
     \returns Number of roots
 -------------------------------------------------------------------------------*/
 
-Cases Solve(double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2){
+Cases Solve (double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2){
 
     assert (isfinite (CoefA));
     assert (isfinite (CoefB));
@@ -53,7 +54,7 @@ Cases Solve(double CoefA, double CoefB, double CoefC, double *Solution1, double 
 
         if (IsZero (CoefB)){
 
-            NumOfRoots = SpecialCase (CoefC);
+            NumOfRoots = ZeroPowPolynomSolve (CoefC);
             *Solution1 = 0.0;
             *Solution2 = 0.0;
         }
@@ -74,24 +75,24 @@ Cases Solve(double CoefA, double CoefB, double CoefC, double *Solution1, double 
 //-----------------------------------------------------------------------------
 
 
-/*!
+/**
     \brief Solver for square equations by coefficients
 
-    \param [in] CoefA, CoefB, CoefC      Value of coefficient a, b, c
-    \param [in] *Solution1, *Solution2                Pointers to the answers' cells
+    \param [in] CoefA, CoefB, CoefC          Value of coefficient a, b, c
+    \param [in] *Solution1, *Solution2       Pointers to the answers' cells
 
     \warning CoefA != 0 (We assume that equation actually is Square)
 
     \returns Number of roots
 */
 
-// return enum
 Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Solution1, double *Solution2){
 
     assert (isfinite (CoefA));
     assert (isfinite (CoefB));
     assert (isfinite (CoefC));
-    assert (!IsZero (CoefA));
+
+    assert (!IsZero  (CoefA));
 
     assert (Solution1 != NULL);
     assert (Solution2 != NULL);
@@ -99,7 +100,7 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Solution1, d
 
     double Discr = 0;  // The discriminant of equation and its square root
     double InvCoefAx2 = 1 / (CoefA * 2); // Due to inevitability of computation we take it once
-
+                               // KOLYA: // Due to inevitability of death we should leave it to the compiler
     Discr = CoefB * CoefB - 4 * CoefA * CoefC;// compute the discriminant of equation
 
     if (IsZero (Discr)){
@@ -107,8 +108,11 @@ Cases SquareSolve(double CoefA, double CoefB, double CoefC, double *Solution1, d
         *Solution1 = -CoefB * InvCoefAx2;
         *Solution2 = *Solution1;
 
-        return ONE_ROOT; // And I'm Groot. // ??????
+        return ONE_ROOT; // And I'm Groot.
     }
+
+    // KOLYA:          -EPS    +EPS
+    // ------------------|---0---|---------------->
 
     else if (Discr > 0){
 
@@ -161,7 +165,7 @@ Cases LinearSolve (double CoefB, double CoefC, double *Solution1) {
     \returns Number of roots
 */
 
-Cases SpecialCase (double CoefC){
+Cases ZeroPowPolynomSolve (double CoefC){
 
     assert (isfinite (CoefC));
 
@@ -197,7 +201,7 @@ const double EPS = 0.00001;///< defines the accuracy of comparing
 // isZero
 int IsZero (double Value){
 
-    assert (isfinite(Value));
+    assert (isfinite (Value));
 
     return EPS > fabs (Value);
 }
@@ -212,7 +216,7 @@ int IsZero (double Value){
     \returns Result of comparing (True <==> (Value1 == Value2))
 */
 
-int CompareDoubles(double Value1, double Value2){
+int CompareDoubles (double Value1, double Value2){
 
     assert (isfinite (Value1));
     assert (isfinite (Value2));

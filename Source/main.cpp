@@ -5,7 +5,8 @@
 #include <assert.h>
 #include <ctype.h>
 #include <windows.h>
-#include "sq_sol.h"
+#include "solver.h"
+#include "io.h"
 #include "colors.h"
 #include "test.h"
 
@@ -16,10 +17,10 @@
     \returns code-of-exit
 */
 
-int main (int argc, char *argv[]){
+int main (const int argc, const char *argv[]){
 
-    int IsExp = 0;
-    double CoefA = 0, CoefB = 1, CoefC = 0;  // coefficients of the equation
+    struct Flags ConsoleFlags = {0, 0, 0};
+    double CoefA = 0, CoefB = 0, CoefC = 0;  // coefficients of the equation
 
     if (argc == 1)   {
 
@@ -29,14 +30,13 @@ int main (int argc, char *argv[]){
     }
     else {
 
-        int NeedTest = 0;  // shouldTest needTest bool  expForm  isDebug  DebugActive
         int InputStatus = ConsoleInput(&CoefA,  &CoefB,    &CoefC,
-                                                argv++,    argc--,
-                                             &NeedTest,    &IsExp);
+                                         argv,    argc,    &ConsoleFlags);
 
-        if (NeedTest)
+        if (ConsoleFlags.NeedTest){
             TestofSolver();
-                                                               //Avoid Path
+        }
+
         if (InputStatus == 0) {
             printf("INPUTERROR");
             return MISTAKE;
@@ -50,11 +50,12 @@ int main (int argc, char *argv[]){
 
     }
 
-    // solution1, solution2
     double Solution1 = 0.0;
     double Solution2 = 0.0;
-    int NumOfRoots = Solve (CoefA, CoefB, CoefC , &Solution1, &Solution2);
-    return FormOutput (Solution1, Solution2, NumOfRoots, IsExp);
+
+    Cases NumOfRoots = Solve (CoefA, CoefB, CoefC , &Solution1, &Solution2);
+
+    return FormOutput (Solution1, Solution2, NumOfRoots, ConsoleFlags.IsExp);
 }
 
 

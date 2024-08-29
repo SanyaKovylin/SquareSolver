@@ -3,10 +3,11 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <windows.h>
-#include "sq_sol.h"
+#include "io.h"
 #include "test.h"
 #include "colors.h"
 
+//        MaxLength of what???????????????? FIXME:
 const int MxLngth = 20;
 
 void ChangeColourTo(Colour color);
@@ -17,16 +18,15 @@ const int MaxTests = 100;
 
 
 struct Test {
+    double CoefA;
+    double CoefB;
+    double CoefC;
 
-        double CoefA;
-        double CoefB;
-        double CoefC;
+    int NumOfRoots;
 
-        int NumOfRoots;
-
-        double Solution1;
-        double Solution2;
-    };
+    double Solution1;
+    double Solution2;
+};
 
 /*! \brief Implements the Testing
 
@@ -36,23 +36,38 @@ struct Test {
     \returns Prints the result of all tests
 */
 
-int TestofSolver(void){
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+
+int TestofSolver (void){
 
     int NumOfTests = 0;
     struct Test Tests[MxLngth] = {};
 
-    FILE *fp;
-    fp = fopen("Build/tests.txt", "r");
-    assert(fp != NULL);
-    int c = 0;
+    FILE *fp = fopen ("Source/tests.txt", "r");
 
-    c = fgetc(fp);
+    if (fp == NULL){
 
-    while ((c = getc(fp)) != EOF){
+        printf  ( "File access Error\n"
+                " Please, check the name of the file\n");
+        return 0;
+    }
+
+    int c = fgetc (fp); // KOLYA: теперь знает разницу!
+
+    while ((c = fgetc (fp)) != EOF){
+
         if (c == '\n'){
             NumOfTests++;
         }
     }
+
+    if (NumOfTests > MxLngth){
+
+        printf("Noo Many Test");
+        return 0;
+    }
+
+    // FIXME: прога крашается!!!!!!!! можно surpass MxLngth
 
     rewind(fp);
 
@@ -78,26 +93,26 @@ int TestofSolver(void){
 
 
             printf ("Test %.3d:  ", i);
-            // txSetConsoleAttr(0x0c);
-            ChangeColourTo(Red);
-            printf("Failed \n");
 
-            ChangeColourTo(LightRed);
+            ChangeColourTo (Red);
+            printf ("Failed \n");
+
+            ChangeColourTo (LightRed);
             printf ("Out: x1 = %g x2 = %g NumOfRoots = %d\n", TestSol1, TestSol2, TestNumOfRoots);
 
-            ChangeColourTo(LightBlue);
+            ChangeColourTo (LightBlue);
             printf ("Expected: x1 = %g x2 = %g NumOfRoots = %d\n", Tests[i].Solution1, Tests[i].Solution2, Tests[i].NumOfRoots);
 
-            ChangeColourTo(Default);
+            ChangeColourTo (Default);
         }
         else{
 
-            printf("Test %.3d:  ", i);
+            printf ("Test %.3d:  ", i);
 
-            ChangeColourTo(Green);
+            ChangeColourTo (Green);
             printf("OK \n");
 
-            ChangeColourTo(Default);
+            ChangeColourTo (Default);
         }
     }
 
@@ -105,15 +120,8 @@ int TestofSolver(void){
 }
 
 
-
-void ChangeColourTo(Colour colour){
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, colour);
+void ChangeColourTo (Colour colour){
+    HANDLE hConsole = GetStdHandle (STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute (hConsole, colour);
 }
 
-/*struct Test *ReadTests(const char* file , struct Test Tests[], int *CountLines){
-
-
-    return Tests;
-}
-*/
